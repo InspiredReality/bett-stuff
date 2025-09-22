@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Mobile UI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #f5f5f5;
+        }
+
+        .header {
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            height: 10vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .main-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 0.25rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 2rem;
+        }
+
+        .filter-button {
+            border: 2px solid transparent;
+            background: rgba(128, 128, 128, 0.9);
+            color: white !important;
+            border-radius: 15px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 0 0 30%;
+            max-width: 33%;
+        }
+
+        .filter-button:hover {
+            background: rgba(128, 128, 128, 1);
+        }
+
+        .filter-button.active {
+            background: linear-gradient(135deg, #ddd 0%, #888 50%, #555 100%) !important;
+            border: 12px solid #000;
+            transform: scale(1.05);
+            font-weight: 950 !important;
+            color: white !important;
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4), 
+                        0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Header colors based on active section */
+        .header.my-stuff {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .header.my-stuff .main-title {
+            color: #333;
+            text-shadow: none;
+        }
+
+        .header.my-stuff .filter-button {
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .header.bet-stuff {
+            background: rgba(128, 128, 128, 0.9);
+        }
+
+        .header.bet-stuff .main-title {
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .header.bet-stuff .filter-button {
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .header.league-stuff {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .header.league-stuff .main-title {
+            color: white;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
+        }
+
+        .header.league-stuff .filter-button {
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .header.default {
+            background: rgba(128, 128, 128, 0.9);
+        }
+
+        .header.default .main-title {
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #2c2c2c 0%, #f0f0f0 100%);
+            position: relative;
+            margin-bottom: -15vh;
+            padding-bottom: calc(1rem + 15vh);
+        }
+
+        /* Portrait mode adjustments */
+        @media (orientation: portrait) {
+            .content-area {
+                margin-bottom: -15vh;
+                padding-bottom: calc(1rem + 15vh);
+            }
+        }
+
+        .page-content {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            min-height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .swipe-hint {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Portrait mode (default) */
+        .navigation {
+            height: 15vh;
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+            flex-direction: row;
+        }
+
+        /* Landscape mode */
+        @media (orientation: landscape) {
+            .app-container {
+                flex-direction: row;
+            }
+
+            .header {
+                height: 10vh;
+                width: 100%;
+            }
+
+            .content-wrapper {
+                display: flex;
+                flex: 1;
+                flex-direction: row;
+            }
+
+            .content-area {
+                flex: 1;
+                margin-bottom: 0;
+                padding-bottom: 1rem;
+                order: 1;
+            }
+
+            .navigation {
+                height: 100%;
+                width: 15vw;
+                flex-direction: column;
+                order: 2;
+            }
+
+            .main-button {
+                flex: 0 0 33.33%;
+                width: 100%;
+                height: 33.33%;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .main-button:last-child {
+                border-bottom: none;
+            }
+
+            .main-button.expanded {
+                flex: 0 0 60%;
+                height: 60%;
+            }
+
+            .main-button.collapsed {
+                flex: 0 0 20%;
+                height: 20%;
+            }
+
+            .sub-buttons-container {
+                flex-direction: column;
+            }
+
+            .sub-button {
+                flex: 1;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                height: auto;
+            }
+
+            .sub-button:last-child {
+                border-bottom: none;
+            }
+
+            /* Landscape mode */
+            .button-icon {
+                font-size: 1rem;
+            }
+            
+            .button-text {
+                font-size: 0.7rem;
+            }
+            
+            .sub-icon {
+                font-size: 0.9rem;
+            }
+            
+            .sub-text {
+                font-size: 0.7rem;
+            }
+            
+            .nav-button.active .sub-text {
+                font-size: 1rem !important;
+            }
+        }
+
+        /* Landscape left (navigation on left side) */
+        @media (orientation: landscape) and (max-device-width: 926px) {
+            .navigation {
+                order: 0;
+            }
+            
+            .content-area {
+                order: 1;
+            }
+        }
+
+        /* Content wrapper for landscape layout */
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+
+        .nav-button {
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: calc(100% - 8px);
+            height: calc(100% - 8px);
+            flex-direction: column;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .main-button {
+            transition: all 0.3s ease;
+            flex: 0 0 33.33%;
+            display: flex;
+        }
+
+        .main-button:last-child {
+        }
+
+        .main-button.expanded {
+            flex: 0 0 60%;
+        }
+
+        .main-button.collapsed {
+            flex: 0 0 20%;
+        }
+
+        .sub-buttons-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .sub-button {
+            flex: 1;
+        }
+
+        .sub-button:last-child {
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* My Stuff buttons - White */
+        #my-stuff-section .nav-button {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            text-shadow: none;
+        }
+
+        #my-stuff-section .nav-button:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        #my-stuff-section .nav-button.active .sub-text {
+            font-size: 1.28rem;
+        }
+
+        /* Bet Stuff buttons - Grey */
+        #bet-stuff-section .nav-button {
+            background: rgba(128, 128, 128, 0.9);
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        #bet-stuff-section .nav-button:hover {
+            background: rgba(128, 128, 128, 1);
+        }
+
+        #bet-stuff-section .nav-button.active {
+            background: #808080;
+            border-top: 3px solid #fff;
+        }
+
+        #bet-stuff-section .nav-button.active .sub-text {
+            font-size: 1.28rem;
+        }
+
+        /* League Stuff buttons - Black */
+        #league-stuff-section .nav-button {
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
+        }
+
+        #league-stuff-section .nav-button:hover {
+            background: rgba(0, 0, 0, 1);
+        }
+
+        #league-stuff-section .nav-button.active {
+            background: black;
+            border-top: 3px solid #fff;
+        }
+
+        #league-stuff-section .nav-button.active .sub-text {
+            font-size: 1.28rem;
+        }
+
+        /* Responsive adjustments */
+        @media (orientation: landscape) and (max-height: 600px) {
+            .main-title {
+                font-size: 1rem;
+            }
+            .header {
+                padding: 0.25rem 1rem;
+                height: 8vh;
+            }
+            .nav-button {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 400px;
+                margin: 0 auto;
+                border-radius: 20px;
+                overflow: hidden;
+                margin-top: 2rem;
+                height: calc(100vh - 4rem);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .navigation {
+                height: 12vh;
+            }
+            .main-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="app-container">
+            <header class="header default">
+                <h1 class="main-title" id="page-title">Bet Stuff</h1>
+                <div class="filter-buttons" id="filter-buttons" style="display: none;">
+                    <!-- Filter buttons will be dynamically added here -->
+                </div>
+            </header>
+            
+            <div class="content-wrapper">
+                <main class="content-area">
+                    <div class="page-content" id="page-content">
+                        <h2 id="page-content-title">Bet Stuff Page</h2>
+                        <p>Content for <span id="page-name">Bet Stuff</span> will go here.</p>
+                        <p>Select a category to view specific content and filters.</p>
+                        <div class="swipe-hint" id="swipe-hint" style="display: none;">
+                            ← Swipe to navigate filters →
+                        </div>
+                    </div>
+                </main>
+
+                <nav class="navigation">
+                    <!-- My Stuff Section -->
+                    <div id="my-stuff-section" class="main-button">
+                        <button id="my-stuff-main" class="nav-button">
+                            My Stuff
+                        </button>
+                        
+                        <div id="my-stuff-subs" class="sub-buttons-container hidden">
+                            <button class="nav-button sub-button" data-main="My Stuff" data-sub="Account" data-filters="Profile,Settings">
+                                Account
+                            </button>
+                            <button class="nav-button sub-button" data-main="My Stuff" data-sub="Ledger" data-filters="Me,All">
+                                Ledger
+                            </button>
+                            <button class="nav-button sub-button" data-main="My Stuff" data-sub="History" data-filters="Me,All">
+                                History
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bet Stuff Section -->
+                    <div id="bet-stuff-section" class="main-button">
+                        <button id="bet-stuff-main" class="nav-button">
+                            Bet Stuff
+                        </button>
+                        
+                        <div id="bet-stuff-subs" class="sub-buttons-container hidden">
+                            <button class="nav-button sub-button" data-main="Bet Stuff" data-sub="Open" data-filters="Mine,All">
+                                Open
+                            </button>
+                            <button class="nav-button sub-button" data-main="Bet Stuff" data-sub="Live" data-filters="Mine,All">
+                                Live
+                            </button>
+                            <button class="nav-button sub-button" data-main="Bet Stuff" data-sub="Done" data-filters="Mine,All">
+                                Done
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- League Stuff Section -->
+                    <div id="league-stuff-section" class="main-button">
+                        <button id="league-stuff-main" class="nav-button">
+                            League Stuff
+                        </button>
+                        
+                        <div id="league-stuff-subs" class="sub-buttons-container hidden">
+                            <button class="nav-button sub-button" data-main="League Stuff" data-sub="Stats" data-filters="Week,Season,All Time">
+                                Stats
+                            </button>
+                            <button class="nav-button sub-button" data-main="League Stuff" data-sub="Maps" data-filters="2025,2024,2023">
+                                Maps
+                            </button>
+                            <button class="nav-button sub-button" data-main="League Stuff" data-sub="Chats" data-filters="Board,Parlays,Dues">
+                                Chats
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // App state
+        let activeMainButton = null;
+        let currentSubButton = null;
+        let currentFilter = null;
+        let currentFilterIndex = 0;
+        let availableFilters = [];
+
+        // Memory system for last viewed filters per sub-item
+        let lastViewedFilters = {
+            'My Stuff': {
+                'Account': 0,
+                'Ledger': 0,
+                'History': 0
+            },
+            'Bet Stuff': {
+                'Open': 1, // Default to "All" (index 1)
+                'Live': 0,
+                'Done': 0
+            },
+            'League Stuff': {
+                'Stats': 0,
+                'Maps': 0,
+                'Chats': 0
+            }
+        };
+
+        // Memory system for last viewed sub-item and filter per main button
+        let lastViewedState = {
+            'My Stuff': {
+                subButton: null,
+                filterIndex: null
+            },
+            'Bet Stuff': {
+                subButton: null,
+                filterIndex: null
+            },
+            'League Stuff': {
+                subButton: null,
+                filterIndex: null
+            }
+        };
+
+        // DOM elements
+        const pageTitle = document.getElementById('page-title');
+        const pageContentTitle = document.getElementById('page-content-title');
+        const pageName = document.getElementById('page-name');
+        const filterButtons = document.getElementById('filter-buttons');
+        const swipeHint = document.getElementById('swipe-hint');
+        const pageContent = document.getElementById('page-content');
+
+        // Button sections
+        const myStuffSection = document.getElementById('my-stuff-section');
+        const betStuffSection = document.getElementById('bet-stuff-section');
+        const leagueStuffSection = document.getElementById('league-stuff-section');
+
+        // Main buttons
+        const myStuffMain = document.getElementById('my-stuff-main');
+        const betStuffMain = document.getElementById('bet-stuff-main');
+        const leagueStuffMain = document.getElementById('league-stuff-main');
+
+        // Sub button containers
+        const myStuffSubs = document.getElementById('my-stuff-subs');
+        const betStuffSubs = document.getElementById('bet-stuff-subs');
+        const leagueStuffSubs = document.getElementById('league-stuff-subs');
+
+        // All sections and buttons
+        const sections = [myStuffSection, betStuffSection, leagueStuffSection];
+        const mainButtons = [myStuffMain, betStuffMain, leagueStuffMain];
+        const subContainers = [myStuffSubs, betStuffSubs, leagueStuffSubs];
+
+        function createFilterButtons() {
+            filterButtons.innerHTML = '';
+            
+            if (availableFilters.length === 0) {
+                filterButtons.style.display = 'none';
+                swipeHint.style.display = 'none';
+                return;
+            }
+
+            filterButtons.style.display = 'flex';
+            swipeHint.style.display = 'block';
+
+            availableFilters.forEach((filter, index) => {
+                const button = document.createElement('button');
+                button.className = `filter-button ${index === currentFilterIndex ? 'active' : ''}`;
+                button.textContent = filter;
+                button.addEventListener('click', () => selectFilter(index));
+                filterButtons.appendChild(button);
+            });
+        }
+
+        function selectFilter(index) {
+            currentFilterIndex = index;
+            currentFilter = availableFilters[index];
+            
+            // Remember this filter selection for this sub-item
+            if (activeMainButton && currentSubButton) {
+                lastViewedFilters[activeMainButton][currentSubButton] = index;
+                // Also update the main button's last viewed state
+                lastViewedState[activeMainButton] = {
+                    subButton: currentSubButton,
+                    filterIndex: index
+                };
+            }
+            
+            updateUI();
+        }
+
+        function updateUI() {
+            const header = document.querySelector('.header');
+            
+            // Update title and header color
+            if (currentFilter && currentSubButton) {
+                pageTitle.textContent = `${activeMainButton} - ${currentSubButton}`;
+                pageContentTitle.textContent = `${currentSubButton} - ${currentFilter} Page`;
+                pageName.textContent = `${currentSubButton} - ${currentFilter}`;
+            } else if (currentSubButton) {
+                pageTitle.textContent = `${activeMainButton} - ${currentSubButton}`;
+                pageContentTitle.textContent = `${currentSubButton} Page`;
+                pageName.textContent = currentSubButton;
+            } else if (activeMainButton) {
+                pageTitle.textContent = activeMainButton;
+                pageContentTitle.textContent = `${activeMainButton} Page`;
+                pageName.textContent = activeMainButton;
+            } else {
+                pageTitle.textContent = 'Bet Stuff';
+                pageContentTitle.textContent = 'Bet Stuff Page';
+                pageName.textContent = 'Bet Stuff';
+            }
+
+            // Update header background color
+            header.className = 'header';
+            if (activeMainButton === 'My Stuff') {
+                header.classList.add('my-stuff');
+            } else if (activeMainButton === 'Bet Stuff') {
+                header.classList.add('bet-stuff');
+            } else if (activeMainButton === 'League Stuff') {
+                header.classList.add('league-stuff');
+            } else {
+                header.classList.add('default');
+            }
+
+            // Reset all sections to default state
+            sections.forEach(section => {
+                section.classList.remove('expanded', 'collapsed');
+            });
+
+            mainButtons.forEach(button => {
+                button.classList.remove('hidden');
+            });
+
+            subContainers.forEach(container => {
+                container.classList.add('hidden');
+            });
+
+            // Remove active from all sub buttons
+            document.querySelectorAll('.sub-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Apply current state
+            if (activeMainButton && currentSubButton) {
+                // Show expanded sub-buttons when we have both main and sub selected
+                if (activeMainButton === 'My Stuff') {
+                    myStuffSection.classList.add('expanded');
+                    betStuffSection.classList.add('collapsed');
+                    leagueStuffSection.classList.add('collapsed');
+                    myStuffMain.classList.add('hidden');
+                    myStuffSubs.classList.remove('hidden');
+                } else if (activeMainButton === 'Bet Stuff') {
+                    betStuffSection.classList.add('expanded');
+                    myStuffSection.classList.add('collapsed');
+                    leagueStuffSection.classList.add('collapsed');
+                    betStuffMain.classList.add('hidden');
+                    betStuffSubs.classList.remove('hidden');
+                } else if (activeMainButton === 'League Stuff') {
+                    leagueStuffSection.classList.add('expanded');
+                    myStuffSection.classList.add('collapsed');
+                    betStuffSection.classList.add('collapsed');
+                    leagueStuffMain.classList.add('hidden');
+                    leagueStuffSubs.classList.remove('hidden');
+                }
+
+                // Highlight active sub button
+                document.querySelectorAll('.sub-button').forEach(btn => {
+                    if (btn.dataset.sub === currentSubButton && btn.dataset.main === activeMainButton) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            // When no activeMainButton or no currentSubButton, show all main buttons equally
+
+            // Update filter buttons
+            createFilterButtons();
+        }
+
+        function resetToDefault() {
+            if (activeMainButton) {
+                // Go to the current main button's home page (keep activeMainButton, clear sub-item)
+                currentSubButton = null;
+                currentFilter = null;
+                currentFilterIndex = 0;
+                availableFilters = [];
+                // Keep activeMainButton so we stay in this section's home page
+            } else {
+                // Already on global home - go to Bet Stuff default
+                activeMainButton = null;
+                currentSubButton = null;
+                currentFilter = null;
+                currentFilterIndex = 0;
+                availableFilters = [];
+            }
+            updateUI();
+        }
+
+        function toggleMainButton(buttonName) {
+            // Check if we have a remembered state for this main button
+            const rememberedState = lastViewedState[buttonName];
+            
+            if (rememberedState.subButton) {
+                // Restore to the last viewed sub-item and filter
+                activeMainButton = buttonName;
+                currentSubButton = rememberedState.subButton;
+                currentFilterIndex = rememberedState.filterIndex;
+                
+                // Get the filters for this sub-button
+                const subButtonElement = document.querySelector(`[data-main="${buttonName}"][data-sub="${rememberedState.subButton}"]`);
+                if (subButtonElement) {
+                    availableFilters = subButtonElement.dataset.filters.split(',');
+                    currentFilter = availableFilters[currentFilterIndex];
+                }
+            } else {
+                // First time clicking this main button - go to default first sub-item's first filter
+                activeMainButton = buttonName;
+                
+                // Set default sub-item and filter based on main button
+                if (buttonName === 'My Stuff') {
+                    currentSubButton = 'Account';
+                    availableFilters = ['Profile', 'Settings'];
+                    currentFilterIndex = 0; // Profile
+                } else if (buttonName === 'Bet Stuff') {
+                    currentSubButton = 'Open';
+                    availableFilters = ['Mine', 'All'];
+                    currentFilterIndex = 0; // Mine
+                } else if (buttonName === 'League Stuff') {
+                    currentSubButton = 'Stats';
+                    availableFilters = ['Week', 'Season', 'All Time'];
+                    currentFilterIndex = 0; // Week
+                }
+                
+                currentFilter = availableFilters[currentFilterIndex];
+                
+                // Update memory systems for this first visit
+                lastViewedFilters[activeMainButton][currentSubButton] = currentFilterIndex;
+                lastViewedState[activeMainButton] = {
+                    subButton: currentSubButton,
+                    filterIndex: currentFilterIndex
+                };
+            }
+            
+            updateUI();
+        }
+
+        function selectSubButton(mainButton, subButton, filters) {
+            // Check if clicking the same sub-button that's already active
+            if (activeMainButton === mainButton && currentSubButton === subButton) {
+                // Go back to this main button's home page
+                currentSubButton = null;
+                currentFilter = null;
+                currentFilterIndex = 0;
+                availableFilters = [];
+                // Keep activeMainButton so we stay in this section's home page
+                updateUI();
+                return;
+            }
+            
+            activeMainButton = mainButton;
+            currentSubButton = subButton;
+            availableFilters = filters.split(',');
+            
+            // Check if we've been to this sub-item before
+            const rememberedIndex = lastViewedFilters[mainButton][subButton];
+            currentFilterIndex = rememberedIndex;
+            currentFilter = availableFilters[currentFilterIndex];
+            
+            // Update the main button's last viewed state
+            lastViewedState[mainButton] = {
+                subButton: subButton,
+                filterIndex: currentFilterIndex
+            };
+            
+            updateUI();
+        }
+
+        // Swipe functionality
+        let startX = 0;
+        let startY = 0;
+
+        pageContent.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+
+        pageContent.addEventListener('touchend', (e) => {
+            if (availableFilters.length <= 1) return;
+
+            const endX = e.changedTouches[0].clientX;
+            const endY = e.changedTouches[0].clientY;
+            const diffX = startX - endX;
+            const diffY = startY - endY;
+
+            // Check if horizontal swipe (not vertical scroll)
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    // Swipe left - next filter
+                    if (currentFilterIndex < availableFilters.length - 1) {
+                        selectFilter(currentFilterIndex + 1);
+                    }
+                } else {
+                    // Swipe right - previous filter
+                    if (currentFilterIndex > 0) {
+                        selectFilter(currentFilterIndex - 1);
+                    }
+                }
+            }
+        });
+
+        // Event listeners
+        pageTitle.addEventListener('click', resetToDefault);
+        myStuffMain.addEventListener('click', () => toggleMainButton('My Stuff'));
+        betStuffMain.addEventListener('click', () => toggleMainButton('Bet Stuff'));
+        leagueStuffMain.addEventListener('click', () => toggleMainButton('League Stuff'));
+s
+        // Sub button event listeners
+        document.querySelectorAll('.sub-button').forEach(button => {
+            button.addEventListener('click', () => {
+                selectSubButton(button.dataset.main, button.dataset.sub, button.dataset.filters);
+            });
+        });
+
+        // Initialize UI
+        updateUI();
+    </script>
+</body>
+</html>s
