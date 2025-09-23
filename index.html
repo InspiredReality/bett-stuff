@@ -16,10 +16,13 @@
             background: #f5f5f5;
             height: 100vh;
             overflow: hidden;
+            margin: 0;
+            padding: 0;
         }
 
         .app-container {
             height: 100vh;
+            width: 100vw;
             display: flex;
             flex-direction: column;
             background: #f5f5f5;
@@ -138,8 +141,7 @@
             overflow-y: auto;
             background: linear-gradient(135deg, #2c2c2c 0%, #f0f0f0 100%);
             position: relative;
-            margin-bottom: -15vh;
-            padding-bottom: calc(1rem + 15vh);
+            width: 100%;
         }
 
         /* Portrait mode adjustments */
@@ -851,7 +853,7 @@
         myStuffMain.addEventListener('click', () => toggleMainButton('My Stuff'));
         betStuffMain.addEventListener('click', () => toggleMainButton('Bet Stuff'));
         leagueStuffMain.addEventListener('click', () => toggleMainButton('League Stuff'));
-s
+
         // Sub button event listeners
         document.querySelectorAll('.sub-button').forEach(button => {
             button.addEventListener('click', () => {
