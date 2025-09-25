@@ -1,6 +1,13 @@
 <template>
   <div 
-    :class="['main-button', { expanded: isActive, collapsed: !isActive && siblingActive }]"
+    :class="[
+      'main-button',
+      { 
+        'expanded': isActive && !isCollapsed,
+        'collapsed': isCollapsed,
+        'normal': !isActive && !isCollapsed
+      }
+    ]"
     :id="`${section.id}-section`"
   >
     <button 
@@ -13,10 +20,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useNavigationStore } from '@/stores/navigation'
-
-const props = defineProps({
+defineProps({
   section: {
     type: Object,
     required: true
@@ -24,32 +28,43 @@ const props = defineProps({
   isActive: {
     type: Boolean,
     default: false
+  },
+  isCollapsed: {
+    type: Boolean,
+    default: false
   }
 })
 
-const emit = defineEmits(['click'])
-
-const navigationStore = useNavigationStore()
-
-const siblingActive = computed(() => 
-  navigationStore.activeMainButton && 
-  navigationStore.activeMainButton !== props.section.name &&
-  !navigationStore.showMainButton // Only collapse when sub buttons are shown
-)
+defineEmits(['click'])
 </script>
 
 <style scoped>
 .main-button {
   transition: all 0.3s ease;
-  flex: 0 0 33.33%;
   display: flex;
+  flex-shrink: 1;
+  flex-grow: 0;
+  min-width: 0;
 }
 
+/* Normal state - equal width for all 3 buttons */
+.main-button.normal {
+  flex: 1 1 33.33%;
+}
+
+/* Expanded state - button takes more space */
 .main-button.expanded {
   flex: 0 0 60%;
 }
 
+/* Collapsed state - button is minimized */
 .main-button.collapsed {
+  flex: 0 0 20%;
+}
+
+/* When showing sub-buttons, adjust the layout */
+.main-button:has(+ .nav-button.sub-button),
+.main-button + .nav-button.sub-button ~ .main-button {
   flex: 0 0 20%;
 }
 
@@ -70,6 +85,15 @@ const siblingActive = computed(() =>
   flex-direction: column;
   text-align: center;
   line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Collapsed buttons show abbreviated text or icon */
+.collapsed .nav-button {
+  font-size: 0.8rem;
+  padding: 0.25rem;
 }
 
 /* Section-specific styles */
@@ -104,16 +128,10 @@ const siblingActive = computed(() =>
 }
 
 @media (orientation: landscape) {
-  .main-button {
-    flex: 0 0 33.33%;
+  .main-button.normal {
+    flex: 1 1 33.33%;
     width: 100%;
-    height: 33.33%;
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  
-  .main-button:last-child {
-    border-bottom: none;
+    height: auto;
   }
   
   .main-button.expanded {
@@ -124,6 +142,25 @@ const siblingActive = computed(() =>
   .main-button.collapsed {
     flex: 0 0 20%;
     height: 20%;
+  }
+  
+  .main-button {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .main-button:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Responsive text sizing */
+@media (max-width: 480px) {
+  .collapsed .nav-button {
+    font-size: 0.7rem;
+  }
+  
+  .nav-button {
+    font-size: 0.9rem;
   }
 }
 </style>

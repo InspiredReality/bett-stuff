@@ -1,26 +1,29 @@
 <template>
   <nav class="navigation" :class="{ 'navigation-portrait': isPortrait, 'navigation-landscape': !isPortrait }">
-    <template v-for="section in navigationStore.navSections" :key="section.id">
-      <!-- Main button - only visible when showMainButton is true or when this section is not active -->
-      <MainButton 
-        v-if="navigationStore.showMainButton || navigationStore.activeMainButton !== section.name"
-        :section="section"
-        :is-active="navigationStore.activeMainButton === section.name"
-        @click="handleMainClick(section)"
-      />
-      
-      <!-- Sub buttons - visible when this section is active and main button is hidden -->
-      <template v-if="navigationStore.activeMainButton === section.name && !navigationStore.showMainButton">
-        <SubButton
-          v-for="subButton in section.subButtons"
-          :key="subButton.name"
-          :sub-button="subButton"
-          :section-name="section.name"
-          :is-active="navigationStore.currentSubButton === subButton.name"
-          @click="handleSubClick(section.name, subButton)"
+    <div class="navigation-container">
+      <template v-for="section in navigationStore.navSections" :key="section.id">
+        <!-- Main button - only visible when showMainButton is true or when this section is not active -->
+        <MainButton 
+          v-if="navigationStore.showMainButton || navigationStore.activeMainButton !== section.name"
+          :section="section"
+          :is-active="navigationStore.activeMainButton === section.name"
+          :is-collapsed="navigationStore.activeMainButton && navigationStore.activeMainButton !== section.name && !navigationStore.showMainButton"
+          @click="handleMainClick(section)"
         />
+        
+        <!-- Sub buttons - visible when this section is active and main button is hidden -->
+        <template v-if="navigationStore.activeMainButton === section.name && !navigationStore.showMainButton">
+          <SubButton
+            v-for="subButton in section.subButtons"
+            :key="subButton.name"
+            :sub-button="subButton"
+            :section-name="section.name"
+            :is-active="navigationStore.currentSubButton === subButton.name"
+            @click="handleSubClick(section.name, subButton)"
+          />
+        </template>
       </template>
-    </template>
+    </div>
   </nav>
 </template>
 
@@ -71,9 +74,14 @@ function handleSubClick(sectionName, subButton) {
   backdrop-filter: blur(10px);
   position: relative;
   z-index: 100;
-  display: flex;
   flex-shrink: 0;
   overflow: hidden;
+}
+
+.navigation-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
 
 /* Portrait mode - bottom navigation */
@@ -82,8 +90,13 @@ function handleSubClick(sectionName, subButton) {
   min-height: 100px;
   max-height: 120px;
   width: 100%;
-  flex-direction: row;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.navigation-portrait .navigation-container {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
 }
 
 /* Landscape mode - side navigation */
@@ -92,8 +105,12 @@ function handleSubClick(sectionName, subButton) {
   width: 15vw;
   min-width: 150px;
   max-width: 200px;
-  flex-direction: column;
   border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.navigation-landscape .navigation-container {
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 @media (orientation: portrait) {

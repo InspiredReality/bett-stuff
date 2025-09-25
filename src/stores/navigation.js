@@ -31,7 +31,7 @@ export const useNavigationStore = defineStore('navigation', () => {
       colorClass: 'bet-stuff',
       subButtons: [
         { name: 'Open', path: 'open', filters: ['Mine', 'All'] },
-        { name: 'Live', path: 'live', filters: ['Mine', 'All'] },
+        { name: 'LIVE', path: 'live', filters: ['Mine', 'All'] },
         { name: 'Done', path: 'done', filters: ['Mine', 'All'] }
       ]
     },
@@ -42,8 +42,8 @@ export const useNavigationStore = defineStore('navigation', () => {
       colorClass: 'league-stuff',
       subButtons: [
         { name: 'Stats', path: 'stats', filters: ['Week', 'Season', 'All Time'] },
-        { name: 'Maps', path: 'maps', filters: ['2025', '2024', '2023'] },
-        { name: 'Chats', path: 'chats', filters: ['Board', 'Parlays', 'Dues'] }
+        { name: 'Maps', path: 'maps', filters: ['2025', '2024', '2023', '2022', '2021'] },
+        { name: 'Chats', path: 'chats', filters: ['Group Text', 'Parlays', 'Dues'] }
       ]
     }
   ])

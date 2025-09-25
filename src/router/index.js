@@ -9,6 +9,8 @@ const router = createRouter({
     },
     {
       path: '/my-stuff',
+      name: 'MyStuffMain',
+      component: () => import('@/views/MyStuff/MyStuffMain.vue'),
       children: [
         {
           path: 'account',
@@ -29,6 +31,8 @@ const router = createRouter({
     },
     {
       path: '/bet-stuff',
+      name: 'BetStuffMain',
+      component: () => import('@/views/BetStuff/BetStuffMain.vue'),
       children: [
         {
           path: 'open',
@@ -49,6 +53,8 @@ const router = createRouter({
     },
     {
       path: '/league-stuff',
+      name: 'LeagueStuffMain',
+      component: () => import('@/views/LeagueStuff/LeagueStuffMain.vue'),
       children: [
         {
           path: 'stats',

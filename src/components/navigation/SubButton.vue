@@ -32,7 +32,9 @@ defineEmits(['click'])
 
 <style scoped>
 .sub-button {
-  flex: 1;
+  flex: 1 1 20%;
+  max-width: 33.33%;
+  min-width: 60px;
 }
 
 .nav-button {
@@ -52,6 +54,9 @@ defineEmits(['click'])
   flex-direction: column;
   text-align: center;
   line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* My Stuff sub-buttons - White */
@@ -107,8 +112,8 @@ defineEmits(['click'])
 
 @media (orientation: landscape) {
   .sub-button {
-    flex: 1;
-    border-right: none;
+    flex: 1 1 20%;
+    max-width: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     height: auto;
   }
@@ -123,6 +128,17 @@ defineEmits(['click'])
   
   .nav-button.active {
     font-size: 1rem !important;
+  }
+}
+
+/* Responsive text sizing */
+@media (max-width: 480px) {
+  .nav-button {
+    font-size: 0.85rem;
+  }
+  
+  .nav-button.active {
+    font-size: 1.1rem !important;
   }
 }
 </style>
