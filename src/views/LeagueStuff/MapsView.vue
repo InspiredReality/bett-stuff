@@ -68,7 +68,17 @@ const regions = ref([
 
 <style scoped>
 .maps-view {
-  padding: 1rem;
+  padding: 0; /* Remove padding to use full space */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-info {
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
 .map-container {
@@ -157,5 +167,12 @@ const regions = ref([
   justify-content: space-between;
   padding: 0.25rem 0;
   font-size: 0.9rem;
+}
+
+/* Ensure content doesn't overflow */
+@media (max-height: 800px) {
+  .map-placeholder {
+    height: 200px;
+  }
 }
 </style>

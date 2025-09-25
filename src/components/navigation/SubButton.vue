@@ -1,7 +1,10 @@
 <template>
   <button 
     class="nav-button sub-button"
-    :class="{ active: isActive }"
+    :class="[
+      { active: isActive },
+      `${sectionName.toLowerCase().replace(' ', '-')}-sub`
+    ]"
     @click="$emit('click')"
   >
     {{ subButton.name }}
@@ -51,7 +54,53 @@ defineEmits(['click'])
   line-height: 1.2;
 }
 
-.nav-button.active {
+/* My Stuff sub-buttons - White */
+.my-stuff-sub {
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  text-shadow: none;
+}
+
+.my-stuff-sub:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.my-stuff-sub.active {
+  background: white;
+  border-top: 3px solid #333;
+  font-size: 1.28rem;
+}
+
+/* Bet Stuff sub-buttons - Dark Grey */
+.bet-stuff-sub {
+  background: rgba(128, 128, 128, 0.9);
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.bet-stuff-sub:hover {
+  background: rgba(128, 128, 128, 1);
+}
+
+.bet-stuff-sub.active {
+  background: #808080;
+  border-top: 3px solid #fff;
+  font-size: 1.28rem;
+}
+
+/* League Stuff sub-buttons - Black */
+.league-stuff-sub {
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.league-stuff-sub:hover {
+  background: rgba(0, 0, 0, 1);
+}
+
+.league-stuff-sub.active {
+  background: black;
   border-top: 3px solid #fff;
   font-size: 1.28rem;
 }

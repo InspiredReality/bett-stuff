@@ -9,6 +9,7 @@ export const useNavigationStore = defineStore('navigation', () => {
   const currentFilterIndex = ref(0)
   const availableFilters = ref([])
   const isPortrait = ref(true)
+  const showMainButton = ref(true) // NEW: Control main button visibility
 
   // Navigation structure
   const navSections = ref([
@@ -105,10 +106,12 @@ export const useNavigationStore = defineStore('navigation', () => {
       currentSubButton.value = null
       currentFilter.value = null
       availableFilters.value = []
+      showMainButton.value = true
       return false
     }
 
     activeMainButton.value = section.name
+    showMainButton.value = true // Show main button when selecting new section
     
     // Restore last viewed state
     const lastState = lastViewedState.value[section.name]
@@ -125,6 +128,7 @@ export const useNavigationStore = defineStore('navigation', () => {
   function selectSubButton(mainName, subButton, savedFilterIndex = null) {
     currentSubButton.value = subButton.name
     availableFilters.value = subButton.filters
+    showMainButton.value = false // Hide main button when sub is selected
     
     const filterIndex = savedFilterIndex !== null 
       ? savedFilterIndex 
@@ -154,6 +158,14 @@ export const useNavigationStore = defineStore('navigation', () => {
     isPortrait.value = window.innerHeight > window.innerWidth
   }
 
+  function returnToMainView() {
+    // Return to main button view
+    currentSubButton.value = null
+    currentFilter.value = null
+    availableFilters.value = []
+    showMainButton.value = true
+  }
+
   return {
     // State
     activeMainButton,
@@ -163,6 +175,7 @@ export const useNavigationStore = defineStore('navigation', () => {
     availableFilters,
     navSections,
     isPortrait,
+    showMainButton, // Export new state
     
     // Computed
     headerClass,
@@ -173,6 +186,7 @@ export const useNavigationStore = defineStore('navigation', () => {
     selectMainButton,
     selectSubButton,
     selectFilter,
-    updateOrientation
+    updateOrientation,
+    returnToMainView // Export new action
   }
 })

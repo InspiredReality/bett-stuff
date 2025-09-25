@@ -1,6 +1,6 @@
 <template>
   <div 
-    :class="['main-button', { expanded: isActive && hasSubButtons, collapsed: !isActive && siblingActive }]"
+    :class="['main-button', { expanded: isActive, collapsed: !isActive && siblingActive }]"
     :id="`${section.id}-section`"
   >
     <button 
@@ -9,10 +9,6 @@
     >
       {{ section.name }}
     </button>
-    
-    <div v-if="isActive && hasSubButtons" class="sub-buttons-container">
-      <slot />
-    </div>
   </div>
 </template>
 
@@ -35,8 +31,11 @@ const emit = defineEmits(['click'])
 
 const navigationStore = useNavigationStore()
 
-const hasSubButtons = computed(() => props.section.subButtons && props.section.subButtons.length > 0)
-const siblingActive = computed(() => navigationStore.activeMainButton && navigationStore.activeMainButton !== props.section.name)
+const siblingActive = computed(() => 
+  navigationStore.activeMainButton && 
+  navigationStore.activeMainButton !== props.section.name &&
+  !navigationStore.showMainButton // Only collapse when sub buttons are shown
+)
 </script>
 
 <style scoped>
@@ -71,12 +70,6 @@ const siblingActive = computed(() => navigationStore.activeMainButton && navigat
   flex-direction: column;
   text-align: center;
   line-height: 1.2;
-}
-
-.sub-buttons-container {
-  display: flex;
-  width: 100%;
-  height: 100%;
 }
 
 /* Section-specific styles */
@@ -131,10 +124,6 @@ const siblingActive = computed(() => navigationStore.activeMainButton && navigat
   .main-button.collapsed {
     flex: 0 0 20%;
     height: 20%;
-  }
-  
-  .sub-buttons-container {
-    flex-direction: column;
   }
 }
 </style>

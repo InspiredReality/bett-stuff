@@ -1,8 +1,13 @@
 <template>
   <div class="app-container" :class="orientationClass">
+    <!-- Header is always visible -->
     <AppHeader />
+    
     <div class="content-wrapper">
+      <!-- Content area with router view -->
       <ContentArea />
+      
+      <!-- Navigation is ALWAYS visible outside of router-view -->
       <AppNavigation />
     </div>
   </div>
@@ -47,14 +52,30 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   bottom: 0;
+  overflow: hidden;
 }
 
 .content-wrapper {
   display: flex;
   flex: 1;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  min-height: 0; /* Important for flex children */
 }
 
+/* Portrait mode (default) */
+@media (orientation: portrait) {
+  .app-container {
+    flex-direction: column;
+  }
+  
+  .content-wrapper {
+    flex-direction: column;
+  }
+}
+
+/* Landscape mode */
 @media (orientation: landscape) {
   .app-container {
     flex-direction: row;
@@ -62,6 +83,18 @@ onUnmounted(() => {
   
   .content-wrapper {
     flex-direction: row;
+    flex: 1;
+  }
+}
+
+/* Ensure full width on all devices */
+@media (min-width: 768px) {
+  .app-container {
+    max-width: none !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
   }
 }
 </style>
