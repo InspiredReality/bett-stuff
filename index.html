@@ -53,9 +53,8 @@
         }
 
         .filter-button {
-            border: 2px solid transparent;
-            background: rgba(128, 128, 128, 0.9);
-            color: white !important;
+            border: none;
+            background: rgba(255, 255, 255, 0.3);
             border-radius: 15px;
             padding: 0.25rem 0.75rem;
             font-size: 0.8rem;
@@ -67,17 +66,12 @@
         }
 
         .filter-button:hover {
-            background: rgba(128, 128, 128, 1);
+            background: rgba(255, 255, 255, 0.5);
         }
 
         .filter-button.active {
-            background: linear-gradient(135deg, #ddd 0%, #888 50%, #555 100%) !important;
-            border: 12px solid #000;
+            background: rgba(255, 255, 255, 0.8);
             transform: scale(1.05);
-            font-weight: 950 !important;
-            color: white !important;
-            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4), 
-                        0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         /* Header colors based on active section */
@@ -142,14 +136,6 @@
             padding-bottom: calc(1rem + 15vh);
         }
 
-        /* Portrait mode adjustments */
-        @media (orientation: portrait) {
-            .content-area {
-                margin-bottom: -15vh;
-                padding-bottom: calc(1rem + 15vh);
-            }
-        }
-
         .page-content {
             background: white;
             border-radius: 12px;
@@ -171,7 +157,6 @@
             color: #666;
         }
 
-        /* Portrait mode (default) */
         .navigation {
             height: 15vh;
             display: flex;
@@ -179,115 +164,6 @@
             backdrop-filter: blur(10px);
             position: relative;
             z-index: 10;
-            flex-direction: row;
-        }
-
-        /* Landscape mode */
-        @media (orientation: landscape) {
-            .app-container {
-                flex-direction: row;
-            }
-
-            .header {
-                height: 10vh;
-                width: 100%;
-            }
-
-            .content-wrapper {
-                display: flex;
-                flex: 1;
-                flex-direction: row;
-            }
-
-            .content-area {
-                flex: 1;
-                margin-bottom: 0;
-                padding-bottom: 1rem;
-                order: 1;
-            }
-
-            .navigation {
-                height: 100%;
-                width: 15vw;
-                flex-direction: column;
-                order: 2;
-            }
-
-            .main-button {
-                flex: 0 0 33.33%;
-                width: 100%;
-                height: 33.33%;
-                border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            }
-
-            .main-button:last-child {
-                border-bottom: none;
-            }
-
-            .main-button.expanded {
-                flex: 0 0 60%;
-                height: 60%;
-            }
-
-            .main-button.collapsed {
-                flex: 0 0 20%;
-                height: 20%;
-            }
-
-            .sub-buttons-container {
-                flex-direction: column;
-            }
-
-            .sub-button {
-                flex: 1;
-                border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-                height: auto;
-            }
-
-            .sub-button:last-child {
-                border-bottom: none;
-            }
-
-            /* Landscape mode */
-            .button-icon {
-                font-size: 1rem;
-            }
-            
-            .button-text {
-                font-size: 0.7rem;
-            }
-            
-            .sub-icon {
-                font-size: 0.9rem;
-            }
-            
-            .sub-text {
-                font-size: 0.7rem;
-            }
-            
-            .nav-button.active .sub-text {
-                font-size: 1rem !important;
-            }
-        }
-
-        /* Landscape left (navigation on left side) */
-        @media (orientation: landscape) and (max-device-width: 926px) {
-            .navigation {
-                order: 0;
-            }
-            
-            .content-area {
-                order: 1;
-            }
-        }
-
-        /* Content wrapper for landscape layout */
-        .content-wrapper {
-            display: flex;
-            flex: 1;
-            flex-direction: column;
         }
 
         .nav-button {
@@ -304,18 +180,17 @@
             position: relative;
             width: calc(100% - 8px);
             height: calc(100% - 8px);
-            flex-direction: column;
-            text-align: center;
-            line-height: 1.2;
         }
 
         .main-button {
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
             flex: 0 0 33.33%;
             display: flex;
         }
 
         .main-button:last-child {
+            border-right: none;
         }
 
         .main-button.expanded {
@@ -334,9 +209,11 @@
 
         .sub-button {
             flex: 1;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .sub-button:last-child {
+            border-right: none;
         }
 
         .hidden {
@@ -354,8 +231,9 @@
             background: rgba(255, 255, 255, 1);
         }
 
-        #my-stuff-section .nav-button.active .sub-text {
-            font-size: 1.28rem;
+        #my-stuff-section .nav-button.active {
+            background: white;
+            border-top: 3px solid #333;
         }
 
         /* Bet Stuff buttons - Grey */
@@ -374,10 +252,6 @@
             border-top: 3px solid #fff;
         }
 
-        #bet-stuff-section .nav-button.active .sub-text {
-            font-size: 1.28rem;
-        }
-
         /* League Stuff buttons - Black */
         #league-stuff-section .nav-button {
             background: rgba(0, 0, 0, 0.9);
@@ -394,10 +268,6 @@
             border-top: 3px solid #fff;
         }
 
-        #league-stuff-section .nav-button.active .sub-text {
-            font-size: 1.28rem;
-        }
-
         /* Responsive adjustments */
         @media (orientation: landscape) and (max-height: 600px) {
             .main-title {
@@ -405,10 +275,12 @@
             }
             .header {
                 padding: 0.25rem 1rem;
-                height: 8vh;
+            }
+            .navigation {
+                height: 12vh;
             }
             .nav-button {
-                font-size: 0.7rem;
+                font-size: 0.9rem;
             }
         }
 
@@ -444,77 +316,75 @@
                 </div>
             </header>
             
-            <div class="content-wrapper">
-                <main class="content-area">
-                    <div class="page-content" id="page-content">
-                        <h2 id="page-content-title">Bet Stuff Page</h2>
-                        <p>Content for <span id="page-name">Bet Stuff</span> will go here.</p>
-                        <p>Select a category to view specific content and filters.</p>
-                        <div class="swipe-hint" id="swipe-hint" style="display: none;">
-                            ← Swipe to navigate filters →
-                        </div>
+            <main class="content-area">
+                <div class="page-content" id="page-content">
+                    <h2 id="page-content-title">Bet Stuff Page</h2>
+                    <p>Content for <span id="page-name">Bet Stuff</span> will go here.</p>
+                    <p>Select a category to view specific content and filters.</p>
+                    <div class="swipe-hint" id="swipe-hint" style="display: none;">
+                        ← Swipe to navigate filters →
                     </div>
-                </main>
+                </div>
+            </main>
 
-                <nav class="navigation">
-                    <!-- My Stuff Section -->
-                    <div id="my-stuff-section" class="main-button">
-                        <button id="my-stuff-main" class="nav-button">
-                            My Stuff
+            <nav class="navigation">
+                <!-- My Stuff Section -->
+                <div id="my-stuff-section" class="main-button">
+                    <button id="my-stuff-main" class="nav-button">
+                        My Stuff
+                    </button>
+                    
+                    <div id="my-stuff-subs" class="sub-buttons-container hidden">
+                        <button class="nav-button sub-button" data-main="My Stuff" data-sub="Account" data-filters="Profile,Settings">
+                            Account
                         </button>
-                        
-                        <div id="my-stuff-subs" class="sub-buttons-container hidden">
-                            <button class="nav-button sub-button" data-main="My Stuff" data-sub="Account" data-filters="Profile,Settings">
-                                Account
-                            </button>
-                            <button class="nav-button sub-button" data-main="My Stuff" data-sub="Ledger" data-filters="Me,All">
-                                Ledger
-                            </button>
-                            <button class="nav-button sub-button" data-main="My Stuff" data-sub="History" data-filters="Me,All">
-                                History
-                            </button>
-                        </div>
+                        <button class="nav-button sub-button" data-main="My Stuff" data-sub="Ledger" data-filters="Me,All">
+                            Ledger
+                        </button>
+                        <button class="nav-button sub-button" data-main="My Stuff" data-sub="History" data-filters="Me,All">
+                            History
+                        </button>
                     </div>
+                </div>
 
-                    <!-- Bet Stuff Section -->
-                    <div id="bet-stuff-section" class="main-button">
-                        <button id="bet-stuff-main" class="nav-button">
-                            Bet Stuff
+                <!-- Bet Stuff Section -->
+                <div id="bet-stuff-section" class="main-button">
+                    <button id="bet-stuff-main" class="nav-button">
+                        Bet Stuff
+                    </button>
+                    
+                    <div id="bet-stuff-subs" class="sub-buttons-container hidden">
+                        <button class="nav-button sub-button" data-main="Bet Stuff" data-sub="Open" data-filters="Mine,All">
+                            Open
                         </button>
-                        
-                        <div id="bet-stuff-subs" class="sub-buttons-container hidden">
-                            <button class="nav-button sub-button" data-main="Bet Stuff" data-sub="Open" data-filters="Mine,All">
-                                Open
-                            </button>
-                            <button class="nav-button sub-button" data-main="Bet Stuff" data-sub="Live" data-filters="Mine,All">
-                                Live
-                            </button>
-                            <button class="nav-button sub-button" data-main="Bet Stuff" data-sub="Done" data-filters="Mine,All">
-                                Done
-                            </button>
-                        </div>
+                        <button class="nav-button sub-button" data-main="Bet Stuff" data-sub="Live" data-filters="Mine,All">
+                            Live
+                        </button>
+                        <button class="nav-button sub-button" data-main="Bet Stuff" data-sub="Done" data-filters="Mine,All">
+                            Done
+                        </button>
                     </div>
+                </div>
 
-                    <!-- League Stuff Section -->
-                    <div id="league-stuff-section" class="main-button">
-                        <button id="league-stuff-main" class="nav-button">
-                            League Stuff
+                <!-- League Stuff Section -->
+                <div id="league-stuff-section" class="main-button">
+                    <button id="league-stuff-main" class="nav-button">
+                        League Stuff
+                    </button>
+                    
+                    <div id="league-stuff-subs" class="sub-buttons-container hidden">
+                        <button class="nav-button sub-button" data-main="League Stuff" data-sub="Stats" data-filters="Week,Season,All Time">
+                            Stats
                         </button>
-                        
-                        <div id="league-stuff-subs" class="sub-buttons-container hidden">
-                            <button class="nav-button sub-button" data-main="League Stuff" data-sub="Stats" data-filters="Week,Season,All Time">
-                                Stats
-                            </button>
-                            <button class="nav-button sub-button" data-main="League Stuff" data-sub="Maps" data-filters="2025,2024,2023">
-                                Maps
-                            </button>
-                            <button class="nav-button sub-button" data-main="League Stuff" data-sub="Chats" data-filters="Board,Parlays,Dues">
-                                Chats
-                            </button>
-                        </div>
+                        <button class="nav-button sub-button" data-main="League Stuff" data-sub="Maps" data-filters="2025,2024,2023">
+                            Maps
+                        </button>
+                        <button class="nav-button sub-button" data-main="League Stuff" data-sub="Chats" data-filters="Board,Parlays,Dues">
+                            Chats
+                        </button>
                     </div>
-                </nav>
-            </div>
+                </div>
+            </nav>
         </div>
     </div>
 
@@ -542,22 +412,6 @@
                 'Stats': 0,
                 'Maps': 0,
                 'Chats': 0
-            }
-        };
-
-        // Memory system for last viewed sub-item and filter per main button
-        let lastViewedState = {
-            'My Stuff': {
-                subButton: null,
-                filterIndex: null
-            },
-            'Bet Stuff': {
-                subButton: null,
-                filterIndex: null
-            },
-            'League Stuff': {
-                subButton: null,
-                filterIndex: null
             }
         };
 
@@ -617,11 +471,6 @@
             // Remember this filter selection for this sub-item
             if (activeMainButton && currentSubButton) {
                 lastViewedFilters[activeMainButton][currentSubButton] = index;
-                // Also update the main button's last viewed state
-                lastViewedState[activeMainButton] = {
-                    subButton: currentSubButton,
-                    filterIndex: index
-                };
             }
             
             updateUI();
@@ -680,8 +529,7 @@
             });
 
             // Apply current state
-            if (activeMainButton && currentSubButton) {
-                // Show expanded sub-buttons when we have both main and sub selected
+            if (activeMainButton) {
                 if (activeMainButton === 'My Stuff') {
                     myStuffSection.classList.add('expanded');
                     betStuffSection.classList.add('collapsed');
@@ -703,13 +551,14 @@
                 }
 
                 // Highlight active sub button
-                document.querySelectorAll('.sub-button').forEach(btn => {
-                    if (btn.dataset.sub === currentSubButton && btn.dataset.main === activeMainButton) {
-                        btn.classList.add('active');
-                    }
-                });
+                if (currentSubButton) {
+                    document.querySelectorAll('.sub-button').forEach(btn => {
+                        if (btn.dataset.sub === currentSubButton && btn.dataset.main === activeMainButton) {
+                            btn.classList.add('active');
+                        }
+                    });
+                }
             }
-            // When no activeMainButton or no currentSubButton, show all main buttons equally
 
             // Update filter buttons
             createFilterButtons();
@@ -717,14 +566,13 @@
 
         function resetToDefault() {
             if (activeMainButton) {
-                // Go to the current main button's home page (keep activeMainButton, clear sub-item)
+                // Go to main button page
                 currentSubButton = null;
                 currentFilter = null;
                 currentFilterIndex = 0;
                 availableFilters = [];
-                // Keep activeMainButton so we stay in this section's home page
             } else {
-                // Already on global home - go to Bet Stuff default
+                // Go to Bet Stuff default
                 activeMainButton = null;
                 currentSubButton = null;
                 currentFilter = null;
@@ -735,66 +583,25 @@
         }
 
         function toggleMainButton(buttonName) {
-            // Check if we have a remembered state for this main button
-            const rememberedState = lastViewedState[buttonName];
-            
-            if (rememberedState.subButton) {
-                // Restore to the last viewed sub-item and filter
-                activeMainButton = buttonName;
-                currentSubButton = rememberedState.subButton;
-                currentFilterIndex = rememberedState.filterIndex;
-                
-                // Get the filters for this sub-button
-                const subButtonElement = document.querySelector(`[data-main="${buttonName}"][data-sub="${rememberedState.subButton}"]`);
-                if (subButtonElement) {
-                    availableFilters = subButtonElement.dataset.filters.split(',');
-                    currentFilter = availableFilters[currentFilterIndex];
-                }
-            } else {
-                // First time clicking this main button - go to default first sub-item's first filter
-                activeMainButton = buttonName;
-                
-                // Set default sub-item and filter based on main button
-                if (buttonName === 'My Stuff') {
-                    currentSubButton = 'Account';
-                    availableFilters = ['Profile', 'Settings'];
-                    currentFilterIndex = 0; // Profile
-                } else if (buttonName === 'Bet Stuff') {
-                    currentSubButton = 'Open';
-                    availableFilters = ['Mine', 'All'];
-                    currentFilterIndex = 0; // Mine
-                } else if (buttonName === 'League Stuff') {
-                    currentSubButton = 'Stats';
-                    availableFilters = ['Week', 'Season', 'All Time'];
-                    currentFilterIndex = 0; // Week
-                }
-                
-                currentFilter = availableFilters[currentFilterIndex];
-                
-                // Update memory systems for this first visit
-                lastViewedFilters[activeMainButton][currentSubButton] = currentFilterIndex;
-                lastViewedState[activeMainButton] = {
-                    subButton: currentSubButton,
-                    filterIndex: currentFilterIndex
-                };
-            }
-            
-            updateUI();
-        }
-
-        function selectSubButton(mainButton, subButton, filters) {
-            // Check if clicking the same sub-button that's already active
-            if (activeMainButton === mainButton && currentSubButton === subButton) {
-                // Go back to this main button's home page
+            if (activeMainButton === buttonName) {
+                // Collapse if same button clicked
+                activeMainButton = null;
                 currentSubButton = null;
                 currentFilter = null;
                 currentFilterIndex = 0;
                 availableFilters = [];
-                // Keep activeMainButton so we stay in this section's home page
-                updateUI();
-                return;
+            } else {
+                // Expand new button
+                activeMainButton = buttonName;
+                currentSubButton = null;
+                currentFilter = null;
+                currentFilterIndex = 0;
+                availableFilters = [];
             }
-            
+            updateUI();
+        }
+
+        function selectSubButton(mainButton, subButton, filters) {
             activeMainButton = mainButton;
             currentSubButton = subButton;
             availableFilters = filters.split(',');
@@ -803,12 +610,6 @@
             const rememberedIndex = lastViewedFilters[mainButton][subButton];
             currentFilterIndex = rememberedIndex;
             currentFilter = availableFilters[currentFilterIndex];
-            
-            // Update the main button's last viewed state
-            lastViewedState[mainButton] = {
-                subButton: subButton,
-                filterIndex: currentFilterIndex
-            };
             
             updateUI();
         }
@@ -851,7 +652,7 @@
         myStuffMain.addEventListener('click', () => toggleMainButton('My Stuff'));
         betStuffMain.addEventListener('click', () => toggleMainButton('Bet Stuff'));
         leagueStuffMain.addEventListener('click', () => toggleMainButton('League Stuff'));
-s
+
         // Sub button event listeners
         document.querySelectorAll('.sub-button').forEach(button => {
             button.addEventListener('click', () => {
@@ -863,4 +664,4 @@ s
         updateUI();
     </script>
 </body>
-</html>s
+</html>
