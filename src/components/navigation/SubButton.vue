@@ -1,14 +1,19 @@
 <template>
-  <button 
-    class="nav-button sub-button"
-    :class="[
-      { active: isActive },
-      `${sectionName.toLowerCase().replace(' ', '-')}-sub`
-    ]"
-    @click="$emit('click')"
+  <div
+    class="sub-button"
+    :class="{ active: isActive }"
   >
-    {{ subButton.name }}
-  </button>
+    <button
+      class="nav-button"
+      :class="[
+        { active: isActive },
+        `${sectionName.toLowerCase().replace(' ', '-')}-sub`
+      ]"
+      @click="$emit('click')"
+    >
+      {{ subButton.name }}
+    </button>
+  </div>
 </template>
 
 <script setup>
@@ -35,7 +40,35 @@ defineEmits(['click'])
   flex: 1 1 20%;
   max-width: 33.33%;
   min-width: 60px;
+  transition: all 0.3s ease;
+  position: relative;
 }
+
+/* Active button is taller in portrait mode - extends downward only */
+@media (orientation: portrait) {
+  .sub-button.active {
+    flex-grow: 1.3; /* Make container slightly larger */
+  }
+
+  .sub-button.active .nav-button {
+    position: absolute;
+    top: 0;
+    left: 4px;
+    right: 4px;
+    bottom: -12px; /* Extend downward */
+    width: auto;
+    height: auto;
+    margin: 0;
+  }
+
+  /* Keep all text at the same baseline by centering in the normal height area */
+  .sub-button .nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 
 .nav-button {
   border: none;

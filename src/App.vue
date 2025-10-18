@@ -14,13 +14,15 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted, watch } from 'vue'
 import { useNavigationStore } from '@/stores/navigation'
+import { useRoute } from 'vue-router'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppNavigation from '@/components/layout/AppNavigation.vue'
 import ContentArea from '@/components/layout/ContentArea.vue'
 
 const navigationStore = useNavigationStore()
+const route = useRoute()
 
 const orientationClass = computed(() => {
   return window.innerHeight > window.innerWidth ? 'portrait' : 'landscape'
@@ -29,6 +31,11 @@ const orientationClass = computed(() => {
 const handleResize = () => {
   navigationStore.updateOrientation()
 }
+
+// Watch for route changes and sync navigation state
+watch(() => route.path, (newPath) => {
+  navigationStore.syncWithRoute(newPath)
+}, { immediate: true })
 
 onMounted(() => {
   window.addEventListener('resize', handleResize)
@@ -42,7 +49,7 @@ onUnmounted(() => {
 
 <style scoped>
 .app-container {
-  height: 100vh;
+  height: 100dvh; /* Use dynamic viewport height for mobile browsers */
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -53,6 +60,7 @@ onUnmounted(() => {
   right: 0;
   bottom: 0;
   overflow: hidden;
+  padding-bottom: env(safe-area-inset-bottom); /* Account for iPhone home indicator */
 }
 
 .content-wrapper {

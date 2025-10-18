@@ -15,28 +15,40 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useNavigationStore } from '@/stores/navigation'
 import { useSwipeGesture } from '@/composables/useSwipeGesture'
 
 const navigationStore = useNavigationStore()
 const filterContainer = ref(null)
+let cleanup = null
 
 onMounted(() => {
-  useSwipeGesture(filterContainer.value, {
-    onSwipeLeft: () => {
-      if (navigationStore.currentFilterIndex < navigationStore.availableFilters.length - 1) {
-        const nextIndex = navigationStore.currentFilterIndex + 1
-        navigationStore.selectFilter(navigationStore.availableFilters[nextIndex], nextIndex)
-      }
-    },
-    onSwipeRight: () => {
-      if (navigationStore.currentFilterIndex > 0) {
-        const prevIndex = navigationStore.currentFilterIndex - 1
-        navigationStore.selectFilter(navigationStore.availableFilters[prevIndex], prevIndex)
-      }
-    }
-  })
+  if (filterContainer.value) {
+    cleanup = useSwipeGesture(filterContainer.value, {
+      onSwipeLeft: () => {
+        console.log('Swipe left detected')
+        if (navigationStore.currentFilterIndex < navigationStore.availableFilters.length - 1) {
+          const nextIndex = navigationStore.currentFilterIndex + 1
+          navigationStore.selectFilter(navigationStore.availableFilters[nextIndex], nextIndex)
+        }
+      },
+      onSwipeRight: () => {
+        console.log('Swipe right detected')
+        if (navigationStore.currentFilterIndex > 0) {
+          const prevIndex = navigationStore.currentFilterIndex - 1
+          navigationStore.selectFilter(navigationStore.availableFilters[prevIndex], prevIndex)
+        }
+      },
+      threshold: 30 // Lower threshold for easier swiping
+    })
+  }
+})
+
+onUnmounted(() => {
+  if (cleanup) {
+    cleanup()
+  }
 })
 </script>
 
@@ -53,6 +65,8 @@ onMounted(() => {
   position: relative;
   padding: 0.75rem 1rem;
   width: 100%;
+  touch-action: pan-x; /* Allow horizontal swipe gestures */
+  user-select: none; /* Prevent text selection during swipe */
 }
 
 .filter-buttons::-webkit-scrollbar {

@@ -3,14 +3,14 @@
     <div class="navigation-container">
       <template v-for="section in navigationStore.navSections" :key="section.id">
         <!-- Main button - only visible when showMainButton is true or when this section is not active -->
-        <MainButton 
+        <MainButton
           v-if="navigationStore.showMainButton || navigationStore.activeMainButton !== section.name"
           :section="section"
           :is-active="navigationStore.activeMainButton === section.name"
           :is-collapsed="navigationStore.activeMainButton && navigationStore.activeMainButton !== section.name && !navigationStore.showMainButton"
           @click="handleMainClick(section)"
         />
-        
+
         <!-- Sub buttons - visible when this section is active and main button is hidden -->
         <template v-if="navigationStore.activeMainButton === section.name && !navigationStore.showMainButton">
           <SubButton
@@ -86,11 +86,12 @@ function handleSubClick(sectionName, subButton) {
 
 /* Portrait mode - bottom navigation */
 .navigation-portrait {
-  height: 15vh;
-  min-height: 100px;
-  max-height: 120px;
+  height: auto;
+  min-height: 90px;
+  max-height: 110px;
   width: 100%;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: max(8px, env(safe-area-inset-bottom)); /* Ensure buttons aren't cut off by home indicator */
 }
 
 .navigation-portrait .navigation-container {

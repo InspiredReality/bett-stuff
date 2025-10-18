@@ -10,6 +10,7 @@ export default defineConfig({
     }
   },
   server: {
+    host: true, // Listen on all addresses including LAN
     port: 3000,
     proxy: {
       '/api': {

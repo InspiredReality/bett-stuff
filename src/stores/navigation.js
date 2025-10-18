@@ -100,8 +100,9 @@ export const useNavigationStore = defineStore('navigation', () => {
   }
 
   function selectMainButton(section) {
-    if (activeMainButton.value === section.name) {
-      // Collapse if clicking active button
+    // Only collapse if clicking the active button AND sub-buttons are currently visible
+    if (activeMainButton.value === section.name && !showMainButton.value) {
+      // Collapse if clicking active button while sub-buttons are showing
       activeMainButton.value = null
       currentSubButton.value = null
       currentFilter.value = null
@@ -110,18 +111,21 @@ export const useNavigationStore = defineStore('navigation', () => {
       return false
     }
 
+    // Set the active section
     activeMainButton.value = section.name
-    showMainButton.value = true // Show main button when selecting new section
-    
-    // Restore last viewed state
+
+    // Restore last viewed state or show sub-buttons
     const lastState = lastViewedState.value[section.name]
     if (lastState.subButton) {
       const subData = section.subButtons.find(sub => sub.name === lastState.subButton)
       if (subData) {
         selectSubButton(section.name, subData, lastState.filterIndex)
       }
+    } else {
+      // If no previous state, show sub-buttons (not main button)
+      showMainButton.value = false
     }
-    
+
     return true
   }
 
@@ -159,11 +163,35 @@ export const useNavigationStore = defineStore('navigation', () => {
   }
 
   function returnToMainView() {
-    // Return to main button view
+    // Return to main button view - keep activeMainButton to maintain header state
     currentSubButton.value = null
     currentFilter.value = null
     availableFilters.value = []
     showMainButton.value = true
+  }
+
+  function syncWithRoute(path) {
+    // Sync navigation state based on current route path
+    const section = navSections.value.find(s => path.startsWith(s.path))
+    if (!section) return
+
+    activeMainButton.value = section.name
+
+    // Check if we're on a sub-route
+    const subPath = path.replace(section.path + '/', '')
+    const subButton = section.subButtons.find(sub => sub.path === subPath)
+
+    if (subButton) {
+      // We're on a sub-route, so hide main buttons and show sub buttons
+      showMainButton.value = false
+      selectSubButton(section.name, subButton)
+    } else {
+      // We're on the main section route, show main buttons
+      showMainButton.value = true
+      currentSubButton.value = null
+      currentFilter.value = null
+      availableFilters.value = []
+    }
   }
 
   return {
@@ -175,18 +203,19 @@ export const useNavigationStore = defineStore('navigation', () => {
     availableFilters,
     navSections,
     isPortrait,
-    showMainButton, // Export new state
-    
+    showMainButton,
+
     // Computed
     headerClass,
     pageTitle,
-    
+
     // Actions
     initializeApp,
     selectMainButton,
     selectSubButton,
     selectFilter,
     updateOrientation,
-    returnToMainView // Export new action
+    returnToMainView,
+    syncWithRoute
   }
 })

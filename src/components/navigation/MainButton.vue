@@ -10,11 +10,14 @@
     ]"
     :id="`${section.id}-section`"
   >
-    <button 
+    <button
       class="nav-button"
       @click="$emit('click')"
     >
-      {{ section.name }}
+      <span v-if="isCollapsed" class="collapsed-text">
+        {{ section.name.split(' ')[0] }}<br>{{ section.name.split(' ')[1] }}
+      </span>
+      <span v-else>{{ section.name }}</span>
     </button>
   </div>
 </template>
@@ -52,14 +55,14 @@ defineEmits(['click'])
   flex: 1 1 33.33%;
 }
 
-/* Expanded state - button takes more space */
+/* Expanded state - button maintains equal width when showing sub-buttons */
 .main-button.expanded {
-  flex: 0 0 60%;
+  flex: 1 1 33.33%;
 }
 
-/* Collapsed state - button is minimized */
+/* Collapsed state - button is minimized when another section shows sub-buttons */
 .main-button.collapsed {
-  flex: 0 0 20%;
+  flex: 0 0 15%;
 }
 
 /* When showing sub-buttons, adjust the layout */
@@ -90,10 +93,19 @@ defineEmits(['click'])
   text-overflow: ellipsis;
 }
 
-/* Collapsed buttons show abbreviated text or icon */
+/* Collapsed buttons show text on 2 lines */
 .collapsed .nav-button {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   padding: 0.25rem;
+  white-space: normal; /* Allow text wrapping */
+  word-break: break-word; /* Break long words if needed */
+  line-height: 1.1;
+}
+
+.collapsed-text {
+  display: inline;
+  text-align: center;
+  line-height: 1.2;
 }
 
 /* Section-specific styles */
@@ -133,21 +145,21 @@ defineEmits(['click'])
     width: 100%;
     height: auto;
   }
-  
+
   .main-button.expanded {
-    flex: 0 0 60%;
-    height: 60%;
+    flex: 1 1 33.33%;
+    height: auto;
   }
-  
+
   .main-button.collapsed {
-    flex: 0 0 20%;
-    height: 20%;
+    flex: 0 0 15%;
+    height: 15%;
   }
-  
+
   .main-button {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
-  
+
   .main-button:last-child {
     border-bottom: none;
   }
@@ -156,11 +168,23 @@ defineEmits(['click'])
 /* Responsive text sizing */
 @media (max-width: 480px) {
   .collapsed .nav-button {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
+    line-height: 1.1;
   }
-  
+
   .nav-button {
     font-size: 0.9rem;
+  }
+}
+
+/* Portrait mode - ensure collapsed buttons wrap text */
+@media (orientation: portrait) {
+  .collapsed .nav-button {
+    white-space: normal;
+    word-break: break-word;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>
