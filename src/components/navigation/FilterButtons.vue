@@ -127,6 +127,13 @@ watch(() => navigationStore.currentFilterIndex, (newIndex) => {
   transition: transform 0.3s ease;
   height: 100%;
   width: max-content;
+  padding: 0 50vw; /* Add padding to enable scrolling even with few buttons */
+}
+
+.filter-buttons-container::before,
+.filter-buttons-container::after {
+  content: '';
+  flex-shrink: 0;
 }
 
 .filter-button {
@@ -134,14 +141,13 @@ watch(() => navigationStore.currentFilterIndex, (newIndex) => {
   background: rgba(128, 128, 128, 0.9);
   color: white !important;
   border-radius: 15px;
-  padding: 0.4rem 1rem;
+  padding: 0.4rem 2rem;
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   flex-shrink: 0;
-  min-width: 28%;
-  max-width: 32%;
+  min-width: 160px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -165,21 +171,24 @@ watch(() => navigationStore.currentFilterIndex, (newIndex) => {
 
 @media (orientation: portrait) {
   .filter-buttons {
-    justify-content: space-around !important;
+    justify-content: flex-start !important;
     width: 100% !important;
-    padding: 0.5rem 0.5rem !important;
+    padding: 0.5rem 0 !important;
     height: 3rem !important;
     min-height: 50px !important;
   }
 
   .filter-buttons-container {
-    justify-content: space-around !important;
-    width: 100% !important;
+    justify-content: flex-start !important;
+    width: max-content !important;
+    padding: 0 50vw !important; /* Ensure scrolling works even with 2 buttons */
   }
 
   .filter-button {
     font-size: 0.75rem !important;
-    padding: 0.4rem 0.9rem !important;
+    padding: 0.4rem 2.4rem !important;
+    flex-shrink: 0 !important;
+    min-width: 180px !important;
   }
 }
 
