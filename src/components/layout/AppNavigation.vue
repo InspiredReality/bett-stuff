@@ -1,5 +1,9 @@
 <template>
   <nav class="navigation" :class="{ 'navigation-portrait': isPortrait, 'navigation-landscape': !isPortrait }">
+    <!-- Filter buttons area - shown above main/sub buttons -->
+    <FilterButtons v-if="navigationStore.availableFilters.length > 0" class="nav-filter-section" />
+
+    <!-- Main/Sub buttons area -->
     <div class="navigation-container">
       <template v-for="section in navigationStore.navSections" :key="section.id">
         <!-- Main button - only visible when showMainButton is true or when this section is not active -->
@@ -33,6 +37,7 @@ import { useNavigationStore } from '@/stores/navigation'
 import { useRouter } from 'vue-router'
 import MainButton from '@/components/navigation/MainButton.vue'
 import SubButton from '@/components/navigation/SubButton.vue'
+import FilterButtons from '@/components/navigation/FilterButtons.vue'
 
 const navigationStore = useNavigationStore()
 const router = useRouter()
@@ -76,28 +81,41 @@ function handleSubClick(sectionName, subButton) {
   z-index: 100;
   flex-shrink: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-filter-section {
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .navigation-container {
   display: flex;
   width: 100%;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
 }
 
 /* Portrait mode - bottom navigation */
 .navigation-portrait {
   height: auto;
-  min-height: 90px;
-  max-height: 110px;
+  min-height: 70px;
   width: 100%;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding-bottom: max(8px, env(safe-area-inset-bottom)); /* Ensure buttons aren't cut off by home indicator */
+}
+
+.navigation-portrait.has-filters {
+  min-height: 120px; /* Extra height for filter buttons */
 }
 
 .navigation-portrait .navigation-container {
   flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
+  min-height: 70px;
+  max-height: 70px;
 }
 
 /* Landscape mode - side navigation */

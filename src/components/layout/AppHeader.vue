@@ -1,13 +1,11 @@
 <template>
   <header class="header" :class="navigationStore.headerClass">
     <h1 class="main-title">{{ navigationStore.pageTitle }}</h1>
-    <FilterButtons v-if="navigationStore.availableFilters.length > 0" />
   </header>
 </template>
 
 <script setup>
 import { useNavigationStore } from '@/stores/navigation'
-import FilterButtons from '@/components/navigation/FilterButtons.vue'
 
 const navigationStore = useNavigationStore()
 </script>
@@ -18,7 +16,8 @@ const navigationStore = useNavigationStore()
   padding: 0.5rem 1rem;
   text-align: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  height: 10vh;
+  height: 6vh;
+  min-height: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,7 +70,8 @@ const navigationStore = useNavigationStore()
 
 @media (orientation: landscape) {
   .header {
-    height: 10vh;
+    height: 6vh;
+    min-height: 50px;
     width: 100%;
   }
 }
