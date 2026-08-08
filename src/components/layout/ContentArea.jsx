@@ -20,7 +20,7 @@ function ContentArea() {
   return (
     <main
       ref={contentRef}
-      className={`flex-1 overflow-y-auto overflow-x-hidden relative w-full min-h-0 ${
+      className={`flex-1 overflow-y-auto overflow-x-hidden hide-scrollbar relative w-full min-h-0 ${
         isFullBleed ? 'p-0' : 'p-4 pt-0'
       }`}
       style={{
