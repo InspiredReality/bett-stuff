@@ -1,0 +1,632 @@
+[
+  {
+    "id": "1-Sportins_Squad-W",
+    "group": 2,
+    "display": "W 1",
+    "imageUrl": null
+  },
+  {
+    "id": "1-OBtoshi_Nakamoto-W",
+    "group": 4,
+    "display": "W 1",
+    "imageUrl": null
+  },
+  {
+    "id": "1-The_Deshaun_Rub_Down-W",
+    "group": 5,
+    "display": "W 1",
+    "imageUrl": null
+  },
+  {
+    "id": "1-Lord_of_Lakengren-W",
+    "group": 8,
+    "display": "W 1",
+    "imageUrl": null
+  },
+  {
+    "id": "1-Broken_Football-W",
+    "group": 10,
+    "display": "W 1",
+    "imageUrl": null
+  },
+  {
+    "id": "2-Front_Gate_Dragon-W",
+    "group": 1,
+    "display": "W 2",
+    "imageUrl": null
+  },
+  {
+    "id": "2-Munchin’_🐱-W",
+    "group": 3,
+    "display": "W 2",
+    "imageUrl": null
+  },
+  {
+    "id": "2-Chili_Cheese_Burritos-W",
+    "group": 7,
+    "display": "W 2",
+    "imageUrl": null
+  },
+  {
+    "id": "2-King_Of_The_North-W",
+    "group": 6,
+    "display": "W 2",
+    "imageUrl": null
+  },
+  {
+    "id": "2-Broken_Football-W",
+    "group": 10,
+    "display": "W 2",
+    "imageUrl": null
+  },
+  {
+    "id": "3-Front_Gate_Dragon-W",
+    "group": 1,
+    "display": "W 3",
+    "imageUrl": null
+  },
+  {
+    "id": "3-Michaels_Neat_Team-W",
+    "group": 9,
+    "display": "W 3",
+    "imageUrl": null
+  },
+  {
+    "id": "3-The_Deshaun_Rub_Down-W",
+    "group": 5,
+    "display": "W 3",
+    "imageUrl": null
+  },
+  {
+    "id": "3-King_Of_The_North-W",
+    "group": 6,
+    "display": "W 3",
+    "imageUrl": null
+  },
+  {
+    "id": "3-Chili_Cheese_Burritos-W",
+    "group": 7,
+    "display": "W 3",
+    "imageUrl": null
+  },
+  {
+    "id": "4-Front_Gate_Dragon-W",
+    "group": 1,
+    "display": "W 4",
+    "imageUrl": null
+  },
+  {
+    "id": "4-Lord_of_Lakengren-W",
+    "group": 8,
+    "display": "W 4",
+    "imageUrl": null
+  },
+  {
+    "id": "4-The_Deshaun_Rub_Down-W",
+    "group": 5,
+    "display": "W 4",
+    "imageUrl": null
+  },
+  {
+    "id": "4-King_Of_The_North-W",
+    "group": 6,
+    "display": "W 4",
+    "imageUrl": null
+  },
+  {
+    "id": "4-Sportins_Squad-W",
+    "group": 2,
+    "display": "W 4",
+    "imageUrl": null
+  },
+  {
+    "id": "5-Broken_Football-W",
+    "group": 10,
+    "display": "W 5",
+    "imageUrl": null
+  },
+  {
+    "id": "5-Munchin’_🐱-W",
+    "group": 3,
+    "display": "W 5",
+    "imageUrl": null
+  },
+  {
+    "id": "5-Sportins_Squad-W",
+    "group": 2,
+    "display": "W 5",
+    "imageUrl": null
+  },
+  {
+    "id": "5-Lord_of_Lakengren-W",
+    "group": 8,
+    "display": "W 5",
+    "imageUrl": null
+  },
+  {
+    "id": "5-OBtoshi_Nakamoto-W",
+    "group": 4,
+    "display": "W 5",
+    "imageUrl": null
+  },
+  {
+    "id": "6-Front_Gate_Dragon-W",
+    "group": 1,
+    "display": "W 6",
+    "imageUrl": null
+  },
+  {
+    "id": "6-Broken_Football-W",
+    "group": 10,
+    "display": "W 6",
+    "imageUrl": null
+  },
+  {
+    "id": "6-King_Of_The_North-W",
+    "group": 6,
+    "display": "W 6",
+    "imageUrl": null
+  },
+  {
+    "id": "6-Sportins_Squad-W",
+    "group": 2,
+    "display": "W 6",
+    "imageUrl": null
+  },
+  {
+    "id": "6-OBtoshi_Nakamoto-W",
+    "group": 4,
+    "display": "W 6",
+    "imageUrl": null
+  },
+  {
+    "id": "7-Munchin’_🐱-W",
+    "group": 3,
+    "display": "W 7",
+    "imageUrl": null
+  },
+  {
+    "id": "7-Michaels_Neat_Team-W",
+    "group": 9,
+    "display": "W 7",
+    "imageUrl": null
+  },
+  {
+    "id": "7-King_Of_The_North-W",
+    "group": 6,
+    "display": "W 7",
+    "imageUrl": null
+  },
+  {
+    "id": "7-OBtoshi_Nakamoto-W",
+    "group": 4,
+    "display": "W 7",
+    "imageUrl": null
+  },
+  {
+    "id": "7-Sportins_Squad-W",
+    "group": 2,
+    "display": "W 7",
+    "imageUrl": null
+  },
+  {
+    "id": "8-King_Of_The_North-W",
+    "group": 6,
+    "display": "W 8",
+    "imageUrl": null
+  },
+  {
+    "id": "8-Munchin’_🐱-W",
+    "group": 3,
+    "display": "W 8",
+    "imageUrl": null
+  },
+  {
+    "id": "8-Sportins_Squad-W",
+    "group": 2,
+    "display": "W 8",
+    "imageUrl": null
+  },
+  {
+    "id": "8-Lord_of_Lakengren-W",
+    "group": 8,
+    "display": "W 8",
+    "imageUrl": null
+  },
+  {
+    "id": "8-Broken_Football-W",
+    "group": 10,
+    "display": "W 8",
+    "imageUrl": null
+  },
+  {
+    "id": "9-OBtoshi_Nakamoto-W",
+    "group": 4,
+    "display": "W 9",
+    "imageUrl": null
+  },
+  {
+    "id": "9-Munchin’_🐱-W",
+    "group": 3,
+    "display": "W 9",
+    "imageUrl": null
+  },
+  {
+    "id": "9-Lord_of_Lakengren-W",
+    "group": 8,
+    "display": "W 9",
+    "imageUrl": null
+  },
+  {
+    "id": "9-Michaels_Neat_Team-W",
+    "group": 9,
+    "display": "W 9",
+    "imageUrl": null
+  },
+  {
+    "id": "9-Broken_Football-W",
+    "group": 10,
+    "display": "W 9",
+    "imageUrl": null
+  },
+  {
+    "id": "10-Front_Gate_Dragon-W",
+    "group": 1,
+    "display": "W 10",
+    "imageUrl": null
+  },
+  {
+    "id": "10-OBtoshi_Nakamoto-W",
+    "group": 4,
+    "display": "W 10",
+    "imageUrl": null
+  },
+  {
+    "id": "10-King_Of_The_North-W",
+    "group": 6,
+    "display": "W 10",
+    "imageUrl": null
+  },
+  {
+    "id": "10-Chili_Cheese_Burritos-W",
+    "group": 7,
+    "display": "W 10",
+    "imageUrl": null
+  },
+  {
+    "id": "10-Michaels_Neat_Team-W",
+    "group": 9,
+    "display": "W 10",
+    "imageUrl": null
+  },
+  {
+    "id": "11-Front_Gate_Dragon-W",
+    "group": 1,
+    "display": "W 11",
+    "imageUrl": null
+  },
+  {
+    "id": "11-Munchin’_🐱-W",
+    "group": 3,
+    "display": "W 11",
+    "imageUrl": null
+  },
+  {
+    "id": "11-Chili_Cheese_Burritos-W",
+    "group": 7,
+    "display": "W 11",
+    "imageUrl": null
+  },
+  {
+    "id": "11-King_Of_The_North-W",
+    "group": 6,
+    "display": "W 11",
+    "imageUrl": null
+  },
+  {
+    "id": "11-Broken_Football-W",
+    "group": 10,
+    "display": "W 11",
+    "imageUrl": null
+  },
+  {
+    "id": "12-Lord_of_Lakengren-W",
+    "group": 8,
+    "display": "W 12",
+    "imageUrl": null
+  },
+  {
+    "id": "12-Munchin’_🐱-W",
+    "group": 3,
+    "display": "W 12",
+    "imageUrl": null
+  },
+  {
+    "id": "12-OBtoshi_Nakamoto-W",
+    "group": 4,
+    "display": "W 12",
+    "imageUrl": null
+  },
+  {
+    "id": "12-King_Of_The_North-W",
+    "group": 6,
+    "display": "W 12",
+    "imageUrl": null
+  },
+  {
+    "id": "12-Broken_Football-W",
+    "group": 10,
+    "display": "W 12",
+    "imageUrl": null
+  },
+  {
+    "id": "13-Front_Gate_Dragon-W",
+    "group": 1,
+    "display": "W 13",
+    "imageUrl": null
+  },
+  {
+    "id": "13-Munchin’_🐱-W",
+    "group": 3,
+    "display": "W 13",
+    "imageUrl": null
+  },
+  {
+    "id": "13-Broken_Football-W",
+    "group": 10,
+    "display": "W 13",
+    "imageUrl": null
+  },
+  {
+    "id": "13-King_Of_The_North-W",
+    "group": 6,
+    "display": "W 13",
+    "imageUrl": null
+  },
+  {
+    "id": "13-Sportins_Squad-W",
+    "group": 2,
+    "display": "W 13",
+    "imageUrl": null
+  },
+  {
+    "id": "14-Front_Gate_Dragon-W",
+    "group": 1,
+    "display": "W 14",
+    "imageUrl": null
+  },
+  {
+    "id": "14-Munchin’_🐱-W",
+    "group": 3,
+    "display": "W 14",
+    "imageUrl": null
+  },
+  {
+    "id": "14-The_Deshaun_Rub_Down-W",
+    "group": 5,
+    "display": "W 14",
+    "imageUrl": null
+  },
+  {
+    "id": "14-King_Of_The_North-W",
+    "group": 6,
+    "display": "W 14",
+    "imageUrl": null
+  },
+  {
+    "id": "14-Michaels_Neat_Team-W",
+    "group": 9,
+    "display": "W 14",
+    "imageUrl": null
+  },
+  {
+    "id": "15-The_Deshaun_Rub_Down-W",
+    "group": 5,
+    "display": "W 15",
+    "imageUrl": null
+  },
+  {
+    "id": "15-Munchin’_🐱-W",
+    "group": 3,
+    "display": "W 15",
+    "imageUrl": null
+  },
+  {
+    "id": "15-King_Of_The_North-W",
+    "group": 6,
+    "display": "W 15",
+    "imageUrl": null
+  },
+  {
+    "id": "15-Sportins_Squad-W",
+    "group": 2,
+    "display": "W 15",
+    "imageUrl": null
+  },
+  {
+    "id": "15-Lord_of_Lakengren-W",
+    "group": 8,
+    "display": "W 15",
+    "imageUrl": null
+  },
+  {
+    "id": "16-Front_Gate_Dragon-W",
+    "group": 1,
+    "display": "W 16",
+    "imageUrl": null
+  },
+  {
+    "id": "16-Broken_Football-W",
+    "group": 10,
+    "display": "W 16",
+    "imageUrl": null
+  },
+  {
+    "id": "17-Broken_Football-W",
+    "group": 10,
+    "display": "W 17",
+    "imageUrl": null
+  },
+  {
+    "id": "1-OBtoshi_Nakamoto-HS",
+    "group": 4,
+    "display": "HS 1",
+    "imageUrl": null
+  },
+  {
+    "id": "2-Munchin’_🐱-HS",
+    "group": 3,
+    "display": "HS 2",
+    "imageUrl": null
+  },
+  {
+    "id": "3-King_Of_The_North-HS",
+    "group": 6,
+    "display": "HS 3",
+    "imageUrl": null
+  },
+  {
+    "id": "4-King_Of_The_North-HS",
+    "group": 6,
+    "display": "HS 4",
+    "imageUrl": null
+  },
+  {
+    "id": "5-Munchin’_🐱-HS",
+    "group": 3,
+    "display": "HS 5",
+    "imageUrl": null
+  },
+  {
+    "id": "6-Broken_Football-HS",
+    "group": 10,
+    "display": "HS 6",
+    "imageUrl": null
+  },
+  {
+    "id": "7-OBtoshi_Nakamoto-HS",
+    "group": 4,
+    "display": "HS 7",
+    "imageUrl": null
+  },
+  {
+    "id": "8-Broken_Football-HS",
+    "group": 10,
+    "display": "HS 8",
+    "imageUrl": null
+  },
+  {
+    "id": "9-Munchin’_🐱-HS",
+    "group": 3,
+    "display": "HS 9",
+    "imageUrl": null
+  },
+  {
+    "id": "10-King_Of_The_North-HS",
+    "group": 6,
+    "display": "HS 10",
+    "imageUrl": null
+  },
+  {
+    "id": "11-King_Of_The_North-HS",
+    "group": 6,
+    "display": "HS 11",
+    "imageUrl": null
+  },
+  {
+    "id": "12-Munchin’_🐱-HS",
+    "group": 3,
+    "display": "HS 12",
+    "imageUrl": null
+  },
+  {
+    "id": "13-Front_Gate_Dragon-HS",
+    "group": 1,
+    "display": "HS 13",
+    "imageUrl": null
+  },
+  {
+    "id": "14-King_Of_The_North-HS",
+    "group": 6,
+    "display": "HS 14",
+    "imageUrl": null
+  },
+  {
+    "id": "15-Lord_of_Lakengren-HS",
+    "group": 8,
+    "display": "HS 15",
+    "imageUrl": null
+  },
+  {
+    "id": "16-Broken_Football-HS",
+    "group": 10,
+    "display": "HS 16",
+    "imageUrl": null
+  },
+  {
+    "id": "17-Broken_Football-HS",
+    "group": 10,
+    "display": "HS 17",
+    "imageUrl": null
+  },
+  {
+    "id": "Front_Gate_Dragon",
+    "group": 1,
+    "display": null,
+    "imageUrl": "/logos/FrontGateDragon.png"
+  },
+  {
+    "id": "Sportins_Squad",
+    "group": 2,
+    "display": null,
+    "imageUrl": "/logos/SportinsSquad.jpg"
+  },
+  {
+    "id": "Munchin’_🐱",
+    "group": 3,
+    "display": null,
+    "imageUrl": "/logos/Danga.jpg"
+  },
+  {
+    "id": "OBtoshi_Nakamoto",
+    "group": 4,
+    "display": null,
+    "imageUrl": "/logos/OBtoshiNakamoto.jpg"
+  },
+  {
+    "id": "The_Deshaun_Rub_Down",
+    "group": 5,
+    "display": null,
+    "imageUrl": "/logos/TheDeshaunRubDown.jpg"
+  },
+  {
+    "id": "King_Of_The_North",
+    "group": 6,
+    "display": null,
+    "imageUrl": "/logos/KingoftheNorth.jpg"
+  },
+  {
+    "id": "Chili_Cheese_Burritos",
+    "group": 7,
+    "display": null,
+    "imageUrl": "/logos/ChiliCheeseBurritos.jpg"
+  },
+  {
+    "id": "Lord_of_Lakengren",
+    "group": 8,
+    "display": null,
+    "imageUrl": "/logos/LordofLakengren.png"
+  },
+  {
+    "id": "Michaels_Neat_Team",
+    "group": 9,
+    "display": null,
+    "imageUrl": "/logos/MichaelsNeatTeam.png"
+  },
+  {
+    "id": "Broken_Football",
+    "group": 10,
+    "display": null,
+    "imageUrl": "/logos/BrokenFootball.png"
+  }
+]
