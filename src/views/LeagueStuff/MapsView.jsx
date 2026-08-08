@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigationStore } from '@/store/navigationStore'
+import ForceGraph from '@/components/league-stuff/ForceGraph'
 
 function MapsView() {
   const { currentFilter } = useNavigationStore()
@@ -21,12 +22,8 @@ function MapsView() {
       )}
 
       <div className="bg-white rounded-xl p-6 shadow-md mb-6">
-        <div
-          className="h-[300px] rounded-lg flex flex-col items-center justify-center text-white mb-6"
-          style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
-        >
-          <p className="text-lg">Interactive betting heat map</p>
-          <p className="text-sm opacity-80">Shows geographical distribution of bets</p>
+        <div className="rounded-lg overflow-hidden bg-neutral-900 mb-6">
+          <ForceGraph />
         </div>
 
         <div className="p-4 bg-gray-50 rounded-lg">
