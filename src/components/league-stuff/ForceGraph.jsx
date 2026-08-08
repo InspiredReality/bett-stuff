@@ -90,8 +90,11 @@ export default function ForceGraph() {
     const svg = d3
       .select(containerRef.current)
       .append('svg')
-      .attr('width', width)
-      .attr('height', height)
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .style('width', '100%')
+      .style('height', '100%')
+      .style('display', 'block')
 
     svg
       .append('defs')
@@ -155,9 +158,14 @@ export default function ForceGraph() {
         .style('font-size', `${Math.min(d.radius * 0.6, 12)}px`)
     })
 
+    // Bounds nodes are clamped to while dragging. Starts as the full
+    // container box; narrowed once the simulation settles and the view
+    // is fit tightly to the actual node spread (see 'end' below), so a
+    // dragged node can never be pulled outside the visible viewBox.
+    const clampBounds = { minX: 0, minY: 0, maxX: width, maxY: height }
+
     simulation.on('tick', () => {
-      const radius = 25
-      const buffer = 30
+      const buffer = 5
 
       link
         .attr('x1', (d) => d.source.x)
@@ -166,10 +174,33 @@ export default function ForceGraph() {
         .attr('y2', (d) => d.target.y)
 
       nodeGroup.attr('transform', (d) => {
-        d.x = Math.max(radius, Math.min(width - radius - buffer, d.x))
-        d.y = Math.max(radius, Math.min(height - radius, d.y))
+        d.x = Math.max(clampBounds.minX + d.radius, Math.min(clampBounds.maxX - d.radius - buffer, d.x))
+        d.y = Math.max(clampBounds.minY + d.radius, Math.min(clampBounds.maxY - d.radius - buffer, d.y))
         return `translate(${d.x},${d.y})`
       })
+    })
+
+    // The layout's row-target math (and the physics settling around it)
+    // doesn't reliably spread nodes flush to every edge, which can leave
+    // an empty margin on one side. Once the simulation cools, crop the
+    // view to the actual bounding box of the settled nodes and stretch it
+    // to fill the container exactly, so there's never dead space — then
+    // re-fit after every drag-triggered re-settle for the same reason.
+    const PAD = 6
+    simulation.on('end', () => {
+      const minX = Math.min(...nodesCopy.map((d) => d.x - d.radius)) - PAD
+      const maxX = Math.max(...nodesCopy.map((d) => d.x + d.radius)) + PAD
+      const minY = Math.min(...nodesCopy.map((d) => d.y - d.radius)) - PAD
+      const maxY = Math.max(...nodesCopy.map((d) => d.y + d.radius)) + PAD
+
+      svg
+        .attr('viewBox', `${minX} ${minY} ${maxX - minX} ${maxY - minY}`)
+        .attr('preserveAspectRatio', 'none')
+
+      clampBounds.minX = minX
+      clampBounds.minY = minY
+      clampBounds.maxX = maxX
+      clampBounds.maxY = maxY
     })
 
     function drag(sim) {

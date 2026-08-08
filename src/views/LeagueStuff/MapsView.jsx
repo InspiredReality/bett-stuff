@@ -5,7 +5,7 @@ function MapsView() {
   const { currentFilter } = useNavigationStore()
 
   return (
-    <div className="-mx-6 flex-1 min-h-0 flex flex-col overflow-hidden bg-neutral-900">
+    <div className="flex-1 min-h-0 flex flex-col overflow-hidden bg-neutral-900">
       {currentFilter === '2024' ? (
         <ForceGraph />
       ) : (
