@@ -1,8 +1,30 @@
 import { useRef, useEffect, useCallback } from 'react'
 import { useNavigationStore } from '@/store/navigationStore'
 
+// Filter pill colors mirror the section's title pill in AppHeader
+// (getTitleStyles) so the sliders visually belong to the active section.
+const FILTER_STYLES = {
+  'my-stuff': {
+    inactive: 'bg-white/80 hover:bg-white text-gray-800',
+    active: 'bg-gradient-to-br from-white via-gray-100 to-gray-300 border-gray-800 text-gray-900'
+  },
+  'bet-stuff': {
+    inactive: 'bg-gray-500/90 hover:bg-gray-500 text-white',
+    active: 'bg-gradient-to-br from-gray-300 via-gray-500 to-gray-600 border-black text-white'
+  },
+  'league-stuff': {
+    inactive: 'bg-black/80 hover:bg-black text-white',
+    active: 'bg-gradient-to-br from-gray-600 via-gray-800 to-black border-white text-white'
+  },
+  default: {
+    inactive: 'bg-gray-500/90 hover:bg-gray-500 text-white',
+    active: 'bg-gradient-to-br from-gray-300 via-gray-500 to-gray-600 border-black text-white'
+  }
+}
+
 function FilterButtons({ className = '' }) {
-  const { availableFilters, currentFilter, currentFilterIndex, selectFilter } = useNavigationStore()
+  const { availableFilters, currentFilter, currentFilterIndex, selectFilter, getHeaderClass } = useNavigationStore()
+  const filterStyles = FILTER_STYLES[getHeaderClass()] || FILTER_STYLES.default
   const containerRef = useRef(null)
   const buttonRefs = useRef([])
   const isScrolling = useRef(false)
@@ -84,10 +106,10 @@ function FilterButtons({ className = '' }) {
             key={filter}
             ref={(el) => (buttonRefs.current[index] = el)}
             onClick={() => handleFilterClick(filter, index)}
-            className={`border-2 border-transparent rounded-2xl px-8 py-1.5 text-sm font-medium cursor-pointer transition-all duration-300 flex-shrink-0 min-w-[160px] whitespace-nowrap overflow-hidden text-ellipsis text-white ${
+            className={`border-2 border-transparent rounded-2xl px-8 py-1.5 text-sm font-medium cursor-pointer transition-all duration-300 flex-shrink-0 min-w-[160px] whitespace-nowrap overflow-hidden text-ellipsis ${
               currentFilter === filter
-                ? 'bg-gradient-to-br from-gray-300 via-gray-500 to-gray-600 border-[3px] border-black scale-110 font-black shadow-[inset_0_2px_4px_rgba(255,255,255,0.4),0_4px_8px_rgba(0,0,0,0.3)] z-[2] relative'
-                : 'bg-gray-500/90 hover:bg-gray-500'
+                ? `${filterStyles.active} border-[3px] scale-110 font-black shadow-[inset_0_2px_4px_rgba(255,255,255,0.4),0_4px_8px_rgba(0,0,0,0.3)] z-[2] relative`
+                : filterStyles.inactive
             }`}
           >
             {filter}
