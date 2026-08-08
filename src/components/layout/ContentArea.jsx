@@ -20,7 +20,7 @@ function ContentArea() {
       }}
     >
       <div
-        className="bg-white rounded-xl p-6 shadow-lg min-h-full relative overflow-hidden"
+        className="bg-white rounded-xl p-6 shadow-lg min-h-full relative overflow-hidden flex flex-col"
         style={{ paddingTop: 'calc(6vh + 1.5rem)' }}
       >
         <AppRoutes />

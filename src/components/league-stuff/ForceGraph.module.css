@@ -1,7 +1,8 @@
 .graph {
   width: 100%;
-  height: 70vh;
-  min-height: 500px;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
 }
 
 .graph :global(svg) {
