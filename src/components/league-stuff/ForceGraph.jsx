@@ -69,7 +69,7 @@ export default function ForceGraph() {
       n.radius = n.isSource ? radiusScale(n.degree) : 20
     })
 
-    const rows = [0.2, 0.5, 0.8]
+    const rows = [0.15, 0.5, 0.85]
     const rowCounts = [2, 3, 5]
     let rowIndex = 0
     let currentRowCount = 0
@@ -77,13 +77,35 @@ export default function ForceGraph() {
       const node = nodesCopy.find((n) => n.id === sourceId)
       if (!node) return
       node.targetY = height * rows[rowIndex]
-      const spacing = width / (rowCounts[rowIndex] + 1)
-      node.targetX = spacing * (currentRowCount + 1)
+      // Spread targets across the FULL width (first at 0%, last at 100%) —
+      // the per-node radius-aware clamp in the tick handler is what keeps
+      // any node from actually overflowing the edge, so aiming targets at
+      // the true edges (rather than leaving a built-in margin here) is what
+      // lets the layout fill the container instead of clustering inward.
+      node.targetX = rowCounts[rowIndex] > 1
+        ? (width * currentRowCount) / (rowCounts[rowIndex] - 1)
+        : width / 2
       currentRowCount++
       if (currentRowCount >= rowCounts[rowIndex]) {
         rowIndex++
         currentRowCount = 0
       }
+    })
+
+    // Pull each week-result bubble toward its OWN team's row position
+    // instead of the container's global center — otherwise every satellite
+    // node (the vast majority of the graph) has a constant pull toward the
+    // middle, which drags clusters belonging to edge-row teams inward and
+    // leaves the true edges empty.
+    const sourceTargetById = {}
+    nodesCopy.forEach((n) => {
+      if (n.isSource) sourceTargetById[n.id] = { x: n.targetX, y: n.targetY }
+    })
+    const satelliteTarget = {}
+    linksCopy.forEach((l) => {
+      const sourceId = typeof l.source === 'string' ? l.source : l.source.id
+      const targetId = typeof l.target === 'string' ? l.target : l.target.id
+      if (sourceTargetById[sourceId]) satelliteTarget[targetId] = sourceTargetById[sourceId]
     })
 
     d3.select(containerRef.current).select('svg').remove()
@@ -113,10 +135,10 @@ export default function ForceGraph() {
         .id((d) => d.id).distance(30).strength(0.5))
       .force('charge', d3.forceManyBody().strength(-20))
       .force('collision', d3.forceCollide((d) => d.radius + 5))
-      .force('x', d3.forceX((d) => (d.isSource ? d.targetX : width / 2))
-        .strength((d) => (d.isSource ? 0.5 : 0.05)))
-      .force('y', d3.forceY((d) => (d.isSource ? d.targetY : height / 2))
-        .strength((d) => (d.isSource ? 0.5 : 0.05)))
+      .force('x', d3.forceX((d) => (d.isSource ? d.targetX : satelliteTarget[d.id]?.x ?? width / 2))
+        .strength((d) => (d.isSource ? 0.5 : 0.1)))
+      .force('y', d3.forceY((d) => (d.isSource ? d.targetY : satelliteTarget[d.id]?.y ?? height / 2))
+        .strength((d) => (d.isSource ? 0.5 : 0.1)))
 
     const link = svg
       .append('g')
@@ -158,15 +180,12 @@ export default function ForceGraph() {
         .style('font-size', `${Math.min(d.radius * 0.6, 12)}px`)
     })
 
-    // Bounds nodes are clamped to while dragging. Starts as the full
-    // container box; narrowed once the simulation settles and the view
-    // is fit tightly to the actual node spread (see 'end' below), so a
-    // dragged node can never be pulled outside the visible viewBox.
-    const clampBounds = { minX: 0, minY: 0, maxX: width, maxY: height }
-
+    // Nodes are clamped to the container box on every tick, using each
+    // node's own radius — this is what actually prevents overflow, so the
+    // target math above can safely aim at the true edges. The viewBox is
+    // set once at mount and never changed, so the frame never "jumps" or
+    // resizes as the simulation settles or nodes get dragged.
     simulation.on('tick', () => {
-      const buffer = 5
-
       link
         .attr('x1', (d) => d.source.x)
         .attr('y1', (d) => d.source.y)
@@ -174,33 +193,10 @@ export default function ForceGraph() {
         .attr('y2', (d) => d.target.y)
 
       nodeGroup.attr('transform', (d) => {
-        d.x = Math.max(clampBounds.minX + d.radius, Math.min(clampBounds.maxX - d.radius - buffer, d.x))
-        d.y = Math.max(clampBounds.minY + d.radius, Math.min(clampBounds.maxY - d.radius - buffer, d.y))
+        d.x = Math.max(d.radius, Math.min(width - d.radius, d.x))
+        d.y = Math.max(d.radius, Math.min(height - d.radius, d.y))
         return `translate(${d.x},${d.y})`
       })
-    })
-
-    // The layout's row-target math (and the physics settling around it)
-    // doesn't reliably spread nodes flush to every edge, which can leave
-    // an empty margin on one side. Once the simulation cools, crop the
-    // view to the actual bounding box of the settled nodes and stretch it
-    // to fill the container exactly, so there's never dead space — then
-    // re-fit after every drag-triggered re-settle for the same reason.
-    const PAD = 6
-    simulation.on('end', () => {
-      const minX = Math.min(...nodesCopy.map((d) => d.x - d.radius)) - PAD
-      const maxX = Math.max(...nodesCopy.map((d) => d.x + d.radius)) + PAD
-      const minY = Math.min(...nodesCopy.map((d) => d.y - d.radius)) - PAD
-      const maxY = Math.max(...nodesCopy.map((d) => d.y + d.radius)) + PAD
-
-      svg
-        .attr('viewBox', `${minX} ${minY} ${maxX - minX} ${maxY - minY}`)
-        .attr('preserveAspectRatio', 'none')
-
-      clampBounds.minX = minX
-      clampBounds.minY = minY
-      clampBounds.maxX = maxX
-      clampBounds.maxY = maxY
     })
 
     function drag(sim) {
