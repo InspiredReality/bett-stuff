@@ -21,28 +21,8 @@ function MapsView() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl p-6 shadow-md mb-6">
-        <div className="rounded-lg overflow-hidden bg-neutral-900 mb-6">
-          <ForceGraph />
-        </div>
-
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <h3 className="mb-4 text-gray-800 font-semibold">Activity Level</h3>
-          <div className="space-y-2">
-            <div className="flex items-center gap-3">
-              <span className="w-6 h-6 rounded bg-red-600"></span>
-              <span>High Activity</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-6 h-6 rounded bg-orange-400"></span>
-              <span>Medium Activity</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="w-6 h-6 rounded bg-green-400"></span>
-              <span>Low Activity</span>
-            </div>
-          </div>
-        </div>
+      <div className="-mx-10 mb-6 overflow-hidden bg-neutral-900">
+        <ForceGraph />
       </div>
 
       <div className="bg-white rounded-xl p-6 shadow-md">
