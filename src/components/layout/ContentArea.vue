@@ -27,6 +27,7 @@ onMounted(() => {
 .content-area {
   flex: 1;
   padding: 1rem;
+  padding-top: 0; /* Remove top padding so content extends behind header */
   overflow-y: auto;
   overflow-x: hidden;
   background: linear-gradient(135deg, #2c2c2c 0%, #f0f0f0 100%);
@@ -40,6 +41,7 @@ onMounted(() => {
   background: white;
   border-radius: 12px;
   padding: 1.5rem;
+  padding-top: calc(6vh + 1.5rem); /* Add padding for header height + normal padding */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   min-height: 100%;
   position: relative;

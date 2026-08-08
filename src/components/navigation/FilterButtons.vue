@@ -163,7 +163,7 @@ watch(() => navigationStore.currentFilterIndex, (newIndex) => {
   transform: scale(1.1);
   font-weight: 950 !important;
   color: white !important;
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4), 
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4),
               0 4px 8px rgba(0, 0, 0, 0.3);
   z-index: 2;
   position: relative;

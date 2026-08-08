@@ -75,7 +75,7 @@ function handleSubClick(sectionName, subButton) {
 
 <style scoped>
 .navigation {
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent;
   backdrop-filter: blur(10px);
   position: relative;
   z-index: 100;
