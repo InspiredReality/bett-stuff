@@ -26,6 +26,9 @@ export const useBetsStore = defineStore('bets', () => {
     
     try {
       const response = await betsService.getRecentBets(lastSyncedTimestamp.value)
+      if (!Array.isArray(response)) {
+        throw new Error('Unexpected response from server')
+      }
       bets.value = response
       lastSyncedTimestamp.value = Date.now()
       return true
